@@ -1,0 +1,219 @@
+[gd_scene load_steps=14 format=3 uid="uid://bax0x2mswgnpw"]
+
+[ext_resource type="FontFile" uid="uid://o7gqnagfnby2" path="res://GUI/fonts/Abaddon Bold.ttf" id="1_hqllu"]
+[ext_resource type="Texture2D" uid="uid://cgsvi1hd4ou18" path="res://addons/michael_games_editor_plugins/assets/cursor.png" id="3_cpjwg"]
+[ext_resource type="Texture2D" uid="uid://d3nmq8hjxv1d6" path="res://Player/Sprites/player_sprite.png" id="3_re5mu"]
+[ext_resource type="Texture2D" uid="uid://dxda6pdclrpa" path="res://Player/Sprites/Shadow.png" id="4_fhs1n"]
+[ext_resource type="Texture2D" uid="uid://fg8lhaso7usk" path="res://Player/Sprites/player_sprite_sword.png" id="4_hy3r5"]
+[ext_resource type="AudioStream" uid="uid://qjmhov4qtufs" path="res://GeneralNodes/footstep_audio_2d/footstep_03.wav" id="6_lq7ok"]
+[ext_resource type="PackedScene" uid="uid://2p13wtrmfvqv" path="res://Levels/Area01/02_shop.tscn" id="7_b6sl7"]
+
+[sub_resource type="GDScript" id="GDScript_e3mbi"]
+script/source = "@tool
+extends Sprite2D
+
+
+func _process( _delta: float ) -> void:
+	frame = $\"..\".frame
+"
+
+[sub_resource type="Animation" id="Animation_0e2bt"]
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [9, 10, 11, 12, 11, 10]
+}
+tracks/1/type = "audio"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AudioStreamPlayer2D")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("6_lq7ok")
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("6_lq7ok")
+}],
+"times": PackedFloat32Array(0, 0.3)
+}
+tracks/1/use_blend = true
+
+[sub_resource type="Animation" id="Animation_u5b7t"]
+resource_name = "default"
+length = 0.6
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [9, 10, 11, 12, 11, 10]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xcfyo"]
+_data = {
+&"RESET": SubResource("Animation_0e2bt"),
+&"default": SubResource("Animation_u5b7t")
+}
+
+[sub_resource type="AudioStreamPolyphonic" id="AudioStreamPolyphonic_b6sl7"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gre7q"]
+shadow_color = Color(0, 0, 0, 0.192157)
+shadow_size = 25
+
+[node name="Blackboard" type="Control"]
+layout_mode = 3
+anchor_right = 1.898
+anchor_bottom = 2.941
+offset_left = -4.0
+offset_top = -3.0
+offset_right = -4.04004
+offset_bottom = -3.07007
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.279
+anchor_top = -0.353
+anchor_right = 1.246
+anchor_bottom = 1.234
+offset_left = 54.169
+offset_top = -47.718
+offset_right = 53.8939
+offset_bottom = -47.7961
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.167356, 0.167356, 0.167356, 1)
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -147.0
+offset_top = 11.0
+offset_right = 11.0
+offset_bottom = 29.0
+grow_horizontal = 2
+scale = Vector2(2, 2)
+theme_override_colors/font_color = Color(1, 0.78882, 0.36847, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_hqllu")
+text = "Shopkeeper"
+horizontal_alignment = 1
+
+[node name="Label3" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -299.5
+offset_top = 45.0
+offset_right = 296.5
+offset_bottom = 447.0
+grow_horizontal = 2
+theme_override_colors/default_color = Color(1, 0.971939, 0.743331, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/bold_font = ExtResource("1_hqllu")
+bbcode_enabled = true
+text = "[color=#999]
+[b]✅01 // Create Shop UI[/b]
+  🗹 Create new global autoload shop scene
+  🗹 Build shop layout
+  🗹 Create new ShopItemButton node and scene
+
+[b]✅02 // Add Interactable Shopkeeper[/b]
+  🗹 Add simple shopkeeper with dialog to our shop
+  🗹 Create shopkeeper script & connect to dialog
+  🗹 Display UI after interacting with shopkeeper
+[/color][color=#FFF]
+[b]03 // Make Shop Work[/b]
+  ★ Load items in shop
+  ★ Update item details on focus
+  ★ Determine if player has the gems needed
+  ★ Allow for purchasing of items
+[/color]
+
+"
+fit_content = true
+
+[node name="Cursor" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(720, 127)
+scale = Vector2(0.047561, 0.047561)
+texture = ExtResource("3_cpjwg")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(717, 205)
+scale = Vector2(2, 2)
+texture = ExtResource("3_re5mu")
+hframes = 16
+vframes = 8
+frame = 9
+
+[node name="Sprite2D2" type="Sprite2D" parent="Sprite2D"]
+show_behind_parent = true
+texture = ExtResource("4_hy3r5")
+hframes = 16
+vframes = 16
+frame = 9
+script = SubResource("GDScript_e3mbi")
+
+[node name="ShadowSprite" type="Sprite2D" parent="Sprite2D"]
+modulate = Color(0, 0, 0, 0.788235)
+show_behind_parent = true
+position = Vector2(0, 19.9919)
+texture = ExtResource("4_fhs1n")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D"]
+libraries = {
+&"": SubResource("AnimationLibrary_xcfyo")
+}
+autoplay = "default"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Sprite2D"]
+stream = SubResource("AudioStreamPolyphonic_b6sl7")
+volume_db = -80.0
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 0
+offset_left = 562.0
+offset_top = 58.0
+offset_right = 766.0
+offset_bottom = 394.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_gre7q")
+
+[node name="PanelContainer" type="PanelContainer" parent="PanelContainer"]
+clip_children = 2
+clip_contents = true
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_gre7q")
+
+[node name="02" parent="PanelContainer/PanelContainer" instance=ExtResource("7_b6sl7")]
+clip_children = 2
+z_index = 999
+position = Vector2(-213, 52)

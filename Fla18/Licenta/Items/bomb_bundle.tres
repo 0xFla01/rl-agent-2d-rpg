@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://bpk1n5m3q8fhy"]
+
+[ext_resource type="Script" uid="uid://bwq22ry1guuwt" path="res://Items/item_effects/item_effect.gd" id="1_base"]
+[ext_resource type="Script" uid="uid://clbry7vbf3yj1" path="res://Items/item_effects/item_effect_add_bombs.gd" id="2_bombs"]
+[ext_resource type="Script" uid="uid://b405hrw22am82" path="res://Items/scripts/item_data.gd" id="3_data"]
+[ext_resource type="Texture2D" uid="uid://chfjvdtrisnqx" path="res://Items/sprites/items_02.png" id="4_tex"]
+
+[sub_resource type="Resource" id="Resource_bombs"]
+script = ExtResource("2_bombs")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bombs"]
+atlas = ExtResource("4_tex")
+region = Rect2(0, 0, 32, 32)
+
+[resource]
+script = ExtResource("3_data")
+name = "Bomb Pack"
+description = "+10 Bombs"
+texture = SubResource("AtlasTexture_bombs")
+cost = 7
+effects = Array[ExtResource("1_base")]([SubResource("Resource_bombs")])

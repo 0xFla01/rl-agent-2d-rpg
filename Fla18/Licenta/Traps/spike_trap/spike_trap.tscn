@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://dtrwmdmld7dru"]
+
+[ext_resource type="Script" uid="uid://bg5l1wj7kd3xm" path="res://Traps/spike_trap/spike_trap.gd" id="1_spike"]
+[ext_resource type="PackedScene" uid="uid://cpvl4rru3x52v" path="res://GeneralNodes/HurtBox/hurt_box.tscn" id="2_spike"]
+[ext_resource type="Texture2D" uid="uid://dtgpeov2f4j8k" path="res://Traps/spike_trap/spike_trap.png" id="3_spike"]
+
+[sub_resource type="RectangleShape2D" id="RectShape_spike"]
+size = Vector2(20, 10)
+
+[node name="SpikeTrap" type="Node2D" unique_id=44148956]
+script = ExtResource("1_spike")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=782536103]
+texture = ExtResource("3_spike")
+
+[node name="HurtBox" parent="." unique_id=1431420413 instance=ExtResource("2_spike")]
+collision_mask = 258
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" unique_id=69010557]
+position = Vector2(0, 4)
+shape = SubResource("RectShape_spike")
+
+[node name="ActiveTimer" type="Timer" parent="." unique_id=736493712]
+one_shot = true
+
+[node name="InactiveTimer" type="Timer" parent="." unique_id=815095256]
+one_shot = true

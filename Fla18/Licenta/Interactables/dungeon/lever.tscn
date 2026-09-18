@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=4]
+
+[ext_resource type="Script" path="res://Interactables/dungeon/scripts/lever.gd" id="1_lever"]
+[ext_resource type="PackedScene" uid="uid://c041sb462wu22" path="res://GeneralNodes/HitBox/hit_box.tscn" id="2_hitbox"]
+
+[sub_resource type="RectangleShape2D" id="HitShape"]
+size = Vector2(28, 28)
+
+[sub_resource type="RectangleShape2D" id="BodyShape"]
+size = Vector2(22, 14)
+
+[node name="Lever" type="Node2D"]
+script = ExtResource("1_lever")
+
+[node name="HitBox" parent="." instance=ExtResource("2_hitbox")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+shape = SubResource("HitShape")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("BodyShape")
+
+[node name="Audio" type="AudioStreamPlayer2D" parent="."]

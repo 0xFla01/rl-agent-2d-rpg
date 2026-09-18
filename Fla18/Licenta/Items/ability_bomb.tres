@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="AbilityItemData" format=3 uid="uid://crnvbf2cf7c8e"]
+
+[ext_resource type="Script" uid="uid://bwq22ry1guuwt" path="res://Items/item_effects/item_effect.gd" id="1_bisgn"]
+[ext_resource type="Script" uid="uid://clbry7vbf3yj1" path="res://Items/item_effects/item_effect_add_bombs.gd" id="2_addbo"]
+[ext_resource type="Script" uid="uid://cxf4k8npd3ij6" path="res://Items/scripts/ability_item_data.gd" id="3_hfhec"]
+[ext_resource type="Texture2D" uid="uid://d3c0c5218ryu2" path="res://Player/Sprites/ability-icons.png" id="4_4g03b"]
+
+[sub_resource type="Resource" id="Resource_bombs"]
+script = ExtResource("2_addbo")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sn5yh"]
+atlas = ExtResource("4_4g03b")
+region = Rect2(0, 0, 32, 0)
+
+[resource]
+script = ExtResource("3_hfhec")
+type = 3
+name = "Bomb Pack"
+description = "Unlock bombs ability
++10 Bombs"
+texture = SubResource("AtlasTexture_sn5yh")
+cost = 7
+effects = Array[ExtResource("1_bisgn")]([SubResource("Resource_bombs")])
+metadata/_custom_type_script = "uid://cxf4k8npd3ij6"

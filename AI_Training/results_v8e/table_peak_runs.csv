@@ -1,0 +1,14 @@
+run,A2/01_nat_pct,A2/02_nat_pct,SHOP_count,D01_count,status
+Random,0.0,0.0,0,0,baseline
+Claude Haiku,0.0,0.0,0,0,baseline
+Claude Opus,0.0,0.0,0,0,baseline
+Run 5e,0.78,0.0,0,0,esuat
+Run 5f,2.97,0.0,0,0,stable
+Run 5g,0.2,0.0,0,0,esuat
+Run 5h v2,0.0,0.0,0,0,esuat
+Run 5j,0.5,0.0,1,0,1 ep cap-coada
+Run 5k,5.03,0.34,3,0,Q3 RECORD A2/01
+Run 5l,0.5,0.0,0,0,esuat lever bug
+Run 5l v2,0.2,0.11,0,0,0 lever activari
+Run 5l v8,28.4,0.6,0,0,breakthrough A2/02 + lever
+Run 5l v8e,25.3,0.9,2,3,PRIMUL D01 REACH

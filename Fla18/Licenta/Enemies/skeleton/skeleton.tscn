@@ -1,0 +1,117 @@
+[gd_scene format=3 uid="uid://csk3lt0u00002"]
+
+[ext_resource type="Script" uid="uid://csk3lt0u00001" path="res://Enemies/skeleton/skeleton.gd" id="1_skel"]
+[ext_resource type="PackedScene" uid="uid://cpvl4rru3x52v" path="res://GeneralNodes/HurtBox/hurt_box.tscn" id="2_hurtbox"]
+[ext_resource type="PackedScene" uid="uid://c041sb462wu22" path="res://GeneralNodes/HitBox/hit_box.tscn" id="3_hitbox"]
+[ext_resource type="Texture2D" uid="uid://dxda6pdclrpa" path="res://Player/Sprites/Shadow.png" id="4_shadow"]
+[ext_resource type="Script" uid="uid://ktscfjqbpjb" path="res://Enemies/Scripts/enemy_state_machine.gd" id="5_esm"]
+[ext_resource type="Script" uid="uid://ky7luyeckccy" path="res://Enemies/Scripts/states/enemy_state_idle.gd" id="6_idle"]
+[ext_resource type="Script" uid="uid://p4obixqhn4pp" path="res://Enemies/Scripts/states/enemy_state_wander.gd" id="7_wander"]
+[ext_resource type="Script" uid="uid://c3achloxgf8vs" path="res://Enemies/Scripts/states/enemy_state_chase.gd" id="8_chase"]
+[ext_resource type="Script" uid="uid://dggp8jtenlplh" path="res://Enemies/Scripts/states/enemy_state_stun.gd" id="9_stun"]
+[ext_resource type="Script" uid="uid://dn05nlarga6ay" path="res://Enemies/Scripts/states/enemy_state_destroy.gd" id="10_destroy"]
+[ext_resource type="PackedScene" uid="uid://bmxmydv0m20du" path="res://Enemies/vision_area.tscn" id="11_vision"]
+[ext_resource type="Resource" uid="uid://cixpflhl0cjvo" path="res://Items/gem.tres" id="12_gem"]
+[ext_resource type="Script" uid="uid://dyht4twncfbe" path="res://Enemies/Scripts/drop_data.gd" id="13_dropdata"]
+[ext_resource type="AudioStream" uid="uid://d1jsxmech6qvu" path="res://Enemies/Slime/hit_01.wav" id="14_hit1"]
+[ext_resource type="AudioStream" uid="uid://jq0tgmmg5c80" path="res://Enemies/Slime/hit_00.wav" id="15_hit0"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_body"]
+radius = 13.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_col"]
+radius = 5.0
+height = 20.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_attack"]
+radius = 14.0
+
+[sub_resource type="Resource" id="Resource_drop_gem"]
+script = ExtResource("13_dropdata")
+item = ExtResource("12_gem")
+probability = 100.0
+min_amount = 1
+max_amount = 3
+
+[node name="Skeleton" type="CharacterBody2D"]
+collision_layer = 256
+collision_mask = 16
+script = ExtResource("1_skel")
+hp = 10
+xp_reward = 15
+
+[node name="HurtBox" parent="." instance=ExtResource("2_hurtbox")]
+position = Vector2(0, -7)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+shape = SubResource("CircleShape2D_body")
+
+[node name="HitBox" parent="." instance=ExtResource("3_hitbox")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+position = Vector2(0, -7)
+shape = SubResource("CircleShape2D_body")
+
+[node name="ShadowSprite2D" type="Sprite2D" parent="."]
+modulate = Color(0, 0, 0, 0.55)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("4_shadow")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -8)
+
+[node name="AttackHurtBox" parent="Sprite2D" instance=ExtResource("2_hurtbox")]
+visible = false
+position = Vector2(0, 14)
+monitoring = false
+damage = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/AttackHurtBox"]
+shape = SubResource("CircleShape2D_attack")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_col")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="EnemyStateMachine" type="Node" parent="."]
+script = ExtResource("5_esm")
+
+[node name="Idle" type="Node" parent="EnemyStateMachine" node_paths=PackedStringArray("after_idle_state")]
+script = ExtResource("6_idle")
+after_idle_state = NodePath("../Wander")
+
+[node name="Wander" type="Node" parent="EnemyStateMachine" node_paths=PackedStringArray("next_state")]
+script = ExtResource("7_wander")
+wander_speed = 25.0
+next_state = NodePath("../Idle")
+
+[node name="Chase" type="Node" parent="EnemyStateMachine" node_paths=PackedStringArray("vision_area", "attack_area", "next_state")]
+script = ExtResource("8_chase")
+chase_speed = 45.0
+vision_area = NodePath("../../VisionArea")
+attack_area = NodePath("../../Sprite2D/AttackHurtBox")
+state_aggro_duration = 6.0
+next_state = NodePath("../Idle")
+
+[node name="Stun" type="Node" parent="EnemyStateMachine" node_paths=PackedStringArray("next_state")]
+script = ExtResource("9_stun")
+decelerate_speed = 5.0
+next_state = NodePath("../Chase")
+
+[node name="Destroy" type="Node" parent="EnemyStateMachine"]
+script = ExtResource("10_destroy")
+decelerate_speed = 5.0
+drops = Array[ExtResource("13_dropdata")]([SubResource("Resource_drop_gem")])
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+max_polyphony = 4
+bus = &"SFX"
+
+[node name="VisionArea" parent="." instance=ExtResource("11_vision")]
+visible = false
+position = Vector2(0, -7)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="VisionArea"]
+polygon = PackedVector2Array(-120, -120, 120, -120, 120, 120, -120, 120)

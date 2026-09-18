@@ -1,0 +1,76 @@
+[gd_scene load_steps=14 format=3 uid="uid://saw_trap_001"]
+
+[ext_resource type="Script" path="res://Traps/saw_trap/saw_trap.gd" id="1_saw"]
+[ext_resource type="PackedScene" uid="uid://cpvl4rru3x52v" path="res://GeneralNodes/HurtBox/hurt_box.tscn" id="2_saw"]
+[ext_resource type="Texture2D" path="res://Traps/saw_trap/saw_trap.png" id="3_saw"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_saw_0"]
+atlas = ExtResource("3_saw")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_saw_1"]
+atlas = ExtResource("3_saw")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_saw_2"]
+atlas = ExtResource("3_saw")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_saw_3"]
+atlas = ExtResource("3_saw")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_saw_4"]
+atlas = ExtResource("3_saw")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_saw_5"]
+atlas = ExtResource("3_saw")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_saw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_saw_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_saw_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_saw_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_saw_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_saw_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_saw_5")
+}],
+"loop": true,
+"name": &"spin",
+"speed": 18.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircShape_saw"]
+radius = 12.0
+
+[node name="SawTrap" type="Node2D"]
+script = ExtResource("1_saw")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_saw")
+animation = &"spin"
+autoplay = "spin"
+
+[node name="HurtBox" parent="." instance=ExtResource("2_saw")]
+collision_mask = 258
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+shape = SubResource("CircShape_saw")
+
+[node name="PulseTimer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true

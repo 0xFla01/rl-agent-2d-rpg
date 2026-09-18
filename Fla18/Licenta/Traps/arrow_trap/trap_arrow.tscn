@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://trap_arrow_001"]
+
+[ext_resource type="Script" path="res://Traps/arrow_trap/trap_arrow.gd" id="1_tarrow"]
+[ext_resource type="PackedScene" uid="uid://cpvl4rru3x52v" path="res://GeneralNodes/HurtBox/hurt_box.tscn" id="2_tarrow"]
+[ext_resource type="Texture2D" path="res://Interactables/arrow/arrow.png" id="3_tarrow"]
+
+[sub_resource type="RectangleShape2D" id="RectShape_tarrow"]
+size = Vector2(20, 6)
+
+[node name="TrapArrow" type="Node2D"]
+script = ExtResource("1_tarrow")
+
+[node name="HurtBox" parent="." instance=ExtResource("2_tarrow")]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+shape = SubResource("RectShape_tarrow")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("3_tarrow")

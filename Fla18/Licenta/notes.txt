@@ -1,0 +1,9 @@
+
+
+
+X) Initiate quest with Nero
+X) Quest should make the cave/dungeon available
+--) Fixed the Statue
+3) Connect/integtrate the boss into the quest
+4) Add a discoverable magical flute item
+5) Complete the quest by returning the flute to Nero (NPC)

@@ -1,0 +1,6 @@
+stable-baselines3==2.3.2
+gymnasium==0.29.1
+numpy
+tensorboard
+matplotlib
+anthropic>=0.40.0

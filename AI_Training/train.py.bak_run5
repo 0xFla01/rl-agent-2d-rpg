@@ -1,0 +1,92 @@
+"""
+Antrenare PPO pentru Dark Wizard speedrun game.
+
+Inainte de rulare:
+  1. Deschide jocul in Godot si apasa Play (F5)
+  2. In joc, apasa F2 ca sa activezi AI mode
+  3. Ruleaza: python train.py
+"""
+
+import os
+from stable_baselines3 import PPO
+from stable_baselines3.common.env_checker import check_env
+from stable_baselines3.common.callbacks import CheckpointCallback, EvalCallback
+from game_env import DarkWizardEnv
+
+MODEL_DIR = "models"
+LOG_DIR   = "logs"
+os.makedirs(MODEL_DIR, exist_ok=True)
+os.makedirs(LOG_DIR,   exist_ok=True)
+
+def _find_latest_checkpoint(model_dir: str) -> str | None:
+    import glob
+    files = glob.glob(os.path.join(model_dir, "ppo_darkwizard_*_steps.zip"))
+    if not files:
+        return None
+    # Run5l: sortare dupa modification time (nu numar de steps).
+    # Justificare: 5l face reset_num_timesteps si checkpoint-urile incep de la 10000_steps,
+    # care e numeric < 80000 (peak Q3 5k). Cu sortare dupa nume, repornirea ar incarca 80k 5k
+    # in loc de progresul 5l. Sortarea dupa mtime garanteaza cel mai recent salvat.
+    files.sort(key=lambda f: os.path.getmtime(f))
+    return files[-1]
+
+
+def main():
+    env = DarkWizardEnv()
+
+    print("Verificare environment...")
+    check_env(env, warn=True)
+    print("Environment OK.\n")
+
+    latest = _find_latest_checkpoint(MODEL_DIR)
+    bc_path = os.path.join(MODEL_DIR, "bc_pretrained.zip")
+    if latest:
+        print(f"Incarc model din checkpoint: {latest}")
+        model = PPO.load(latest, env=env, tensorboard_log=LOG_DIR,
+                         custom_objects={"ent_coef": 0.04})   # Run5l_v6: 0.02→0.04 (Q4 collapse 13h)
+    elif os.path.exists(bc_path):
+        print(f"Incarc BC pretrained: {bc_path}")
+        model = PPO.load(bc_path, env=env, tensorboard_log=LOG_DIR,
+                         custom_objects={"ent_coef": 0.04})
+    else:
+        print("Niciun checkpoint gasit, pornesc de la zero.")
+        model = PPO(
+            "MlpPolicy",
+            env,
+            verbose=1,
+            learning_rate=lambda pr: 3e-4 * (0.1 + 0.9 * pr),
+            n_steps=2048,
+            batch_size=64,
+            n_epochs=10,
+            gamma=0.99,
+            gae_lambda=0.95,
+            clip_range=0.2,
+            ent_coef=0.10,   # Run 5: 0.20 → 0.10 (BC weights aduc structura; menținem explorare moderata)
+            tensorboard_log=LOG_DIR,
+            policy_kwargs=dict(net_arch=[256, 256]),
+        )
+
+    # salveaza checkpoint la fiecare 10k pasi
+    checkpoint_cb = CheckpointCallback(
+        save_freq=10_000,
+        save_path=MODEL_DIR,
+        name_prefix="ppo_darkwizard",
+    )
+
+    print("Incep antrenarea. Urmareste progresul cu:")
+    print(f"  tensorboard --logdir {LOG_DIR}\n")
+
+    model.learn(
+        total_timesteps=2_000_000,
+        callback=checkpoint_cb,
+        progress_bar=True,
+        reset_num_timesteps=True,   # Run5e: reset clean — checkpoint numbering separat per run
+    )
+
+    model.save(os.path.join(MODEL_DIR, "ppo_darkwizard_final"))
+    print("\nAntrenare terminata. Model salvat in:", MODEL_DIR)
+    env.close()
+
+
+if __name__ == "__main__":
+    main()

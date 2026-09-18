@@ -1,0 +1,289 @@
+episod,outcome,reward_total,time_s,kills,damage_taken,buff_count,boss_reached,boss_hp_min,level,hp_remaining,gems,camera_maxima,scene_path
+1,fail,-606.1,106.1,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+2,fail,-510.0,10.0,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+3,fail,-597.5,97.5,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+4,fail,-671.7,171.7,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+5,fail,-853.2,353.2,3,6,0,0,-1,1,0,9,A1 Goblini,res://Levels/Area01/01.tscn
+6,fail,-1150.4,650.4,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+7,fail,-579.9,79.9,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+8,fail,-547.8,47.8,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+9,fail,-514.3,14.3,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+10,fail,-510.4,10.4,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+11,fail,-598.8,98.8,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+12,fail,-532.3,32.3,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+13,fail,-520.9,20.9,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+14,fail,-533.4,33.4,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+15,fail,-537.4,37.4,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+16,fail,-533.5,33.5,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+17,fail,-585.0,85.0,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+18,fail,-517.8,17.8,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+19,fail,-578.9,78.9,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+20,fail,-540.5,40.5,1,6,0,0,-1,1,0,4,A1 Goblini,res://Levels/Area01/01.tscn
+21,fail,-536.2,36.2,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+22,fail,-583.2,83.2,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+23,fail,-545.8,45.8,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+24,fail,-517.3,17.3,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+25,fail,-615.2,115.2,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+26,fail,-578.6,78.6,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+27,fail,-517.4,17.4,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+28,fail,-516.2,16.2,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+29,fail,-538.4,38.4,0,7,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+30,fail,-516.7,16.7,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+31,fail,-518.4,18.4,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+32,fail,-583.0,83.0,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+33,fail,-542.9,42.9,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+34,fail,-529.4,29.4,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+35,,0.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+36,,0.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+37,fail,-506.6,6.6,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+38,fail,-510.3,10.3,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+39,fail,-511.1,11.1,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+40,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+41,fail,-509.5,9.5,1,6,0,0,-1,1,0,3,A1 Goblini,res://Levels/Area01/01.tscn
+42,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+43,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+44,truncated_room,-50.0,75.3,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+45,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+46,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+47,fail,-509.4,9.4,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+48,fail,-585.4,85.4,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+49,truncated_room,-50.0,118.7,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+50,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+51,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+52,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+53,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+54,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+55,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+56,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+57,truncated_room,-50.0,137.5,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+58,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+59,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+60,fail,-550.1,50.1,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+61,,0.0,50.1,0,0,0,0,-1,0,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+62,fail,-528.7,28.7,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+63,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+64,fail,-527.0,27.0,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+65,,0.0,27.0,0,0,0,0,-1,0,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+66,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+67,truncated_room,-50.0,30.3,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+68,fail,-515.0,15.0,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+69,fail,-512.1,12.1,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+70,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+71,fail,-511.7,11.7,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+72,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+73,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+74,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+75,fail,-511.0,11.0,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+76,fail,-514.0,14.0,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+77,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+78,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+79,fail,-526.1,26.1,1,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+80,fail,-531.7,31.7,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+81,fail,-529.1,29.1,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+82,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+83,fail,-531.7,31.7,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+84,fail,-516.0,16.0,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+85,fail,-518.5,18.5,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+86,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+87,fail,-511.1,11.1,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+88,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+89,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+90,fail,-511.2,11.2,1,6,0,0,-1,1,0,1,A1 Goblini,res://Levels/Area01/01.tscn
+91,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+92,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+93,fail,-521.3,21.3,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+94,,0.0,21.3,0,0,0,0,-1,0,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+95,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+96,fail,-505.8,5.8,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+97,,0.0,5.8,0,0,0,0,-1,0,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+98,fail,-513.2,13.2,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+99,fail,-553.0,53.0,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+100,fail,-553.3,53.3,1,6,0,0,-1,1,0,1,A1 Goblini,res://Levels/Area01/01.tscn
+101,,0.0,53.3,0,0,0,0,-1,0,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+102,fail,-512.8,12.8,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+103,,0.0,12.8,0,0,0,0,-1,0,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+104,fail,-516.2,16.2,2,6,0,0,-1,2,0,4,A1 Goblini,res://Levels/Area01/01.tscn
+105,fail,-514.8,14.8,0,6,0,0,-1,2,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+106,,0.0,14.8,0,0,0,0,-1,0,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+107,fail,-513.1,13.1,1,6,0,0,-1,2,0,2,A1 Goblini,res://Levels/Area01/01.tscn
+108,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+109,fail,-511.9,11.9,0,6,0,0,-1,2,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+110,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+111,fail,-527.2,27.2,0,6,0,0,-1,2,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+112,,0.0,27.2,0,0,0,0,-1,0,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+113,fail,-532.9,32.9,0,6,0,0,-1,2,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+114,,0.0,32.9,0,0,0,0,-1,0,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+115,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+116,fail,-514.6,14.6,0,6,0,0,-1,2,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+117,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+118,fail,-517.3,17.3,1,6,0,0,-1,2,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+119,fail,-516.5,16.5,1,6,0,0,-1,2,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+120,fail,-520.2,20.2,0,6,0,0,-1,2,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+121,fail,-508.7,8.7,0,6,0,0,-1,2,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+122,fail,-514.8,14.8,0,6,0,0,-1,2,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+123,,0.0,14.8,0,0,0,0,-1,0,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+124,fail,-510.3,10.3,0,6,0,0,-1,2,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+125,fail,-507.1,7.1,0,6,0,0,-1,2,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+126,,0.0,7.1,0,0,0,0,-1,0,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+127,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+128,fail,-523.5,23.5,0,6,0,0,-1,2,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+129,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+130,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+131,fail,-510.6,10.6,0,6,0,0,-1,2,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+132,fail,-509.4,9.4,0,6,0,0,-1,2,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+133,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+134,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+135,fail,-518.7,18.7,0,6,0,0,-1,2,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+136,fail,-512.2,12.2,0,6,0,0,-1,2,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+137,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+138,fail,-511.9,11.9,0,6,0,0,-1,2,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+139,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+140,fail,-513.0,13.0,0,6,0,0,-1,2,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+141,,0.0,13.0,0,0,0,0,-1,0,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+142,fail,-523.0,23.0,0,6,0,0,-1,2,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+143,,0.0,23.0,0,0,0,0,-1,0,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+144,fail,-512.6,12.6,0,6,0,0,-1,2,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+145,fail,-511.0,11.0,0,6,0,0,-1,2,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+146,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+147,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+148,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+149,fail,-517.9,17.9,0,7,0,0,-1,2,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+150,fail,-516.9,16.9,0,6,0,0,-1,2,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+151,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+152,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+153,fail,-511.6,11.6,0,6,0,0,-1,2,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+154,fail,-514.8,14.8,0,6,0,0,-1,2,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+155,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+156,fail,-523.4,23.4,0,6,0,0,-1,2,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+157,,0.0,23.4,0,0,0,0,-1,0,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+158,fail,-553.6,53.6,1,6,0,0,-1,2,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+159,fail,-530.1,30.1,2,6,0,0,-1,3,0,4,A1 Goblini,res://Levels/Area01/01.tscn
+160,,0.0,30.1,0,0,0,0,-1,0,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+161,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+162,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+163,fail,-514.3,14.3,0,6,0,0,-1,3,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+164,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+165,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+166,fail,-516.3,16.3,0,6,0,0,-1,3,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+167,,0.0,16.3,0,0,0,0,-1,0,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+168,fail,-526.6,26.6,2,6,0,0,-1,3,0,5,A1 Goblini,res://Levels/Area01/01.tscn
+169,fail,-522.3,22.3,1,6,0,0,-1,3,0,3,A1 Goblini,res://Levels/Area01/01.tscn
+170,truncated_room,-50.0,14.3,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+171,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+172,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+173,fail,-525.5,25.5,0,6,0,0,-1,3,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+174,fail,-564.1,64.1,0,6,0,0,-1,3,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+175,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+176,fail,-517.3,17.3,1,6,0,0,-1,3,0,2,A1 Goblini,res://Levels/Area01/01.tscn
+177,,0.0,17.3,0,0,0,0,-1,0,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+178,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+179,fail,-535.8,35.8,0,6,0,0,-1,3,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+180,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+181,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+182,fail,-540.9,40.9,0,6,0,0,-1,3,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+183,fail,-514.8,14.8,0,6,0,0,-1,3,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+184,fail,-512.7,12.7,0,6,0,0,-1,3,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+185,fail,-513.3,13.3,0,6,0,0,-1,3,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+186,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+187,fail,-577.4,77.4,4,6,0,0,-1,3,0,8,A1 Buff,res://Levels/Area01/03.tscn
+188,fail,-517.7,17.7,1,6,0,0,-1,4,0,4,A1 Goblini,res://Levels/Area01/01.tscn
+189,fail,-522.6,22.6,0,6,0,0,-1,4,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+190,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+191,fail,-518.2,18.2,0,6,0,0,-1,4,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+192,,0.0,18.2,0,0,0,0,-1,0,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+193,,0.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+194,,0.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+195,,0.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+196,,0.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+197,fail,-525.3,25.3,0,6,0,0,-1,4,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+198,fail,-530.2,30.2,1,6,0,0,-1,4,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+199,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+200,fail,-513.9,13.9,0,6,0,0,-1,4,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+201,fail,-525.4,25.4,0,6,0,0,-1,4,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+202,fail,-517.8,17.8,0,6,0,0,-1,4,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+203,,0.0,17.8,0,0,0,0,-1,0,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+204,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+205,fail,-541.6,41.6,0,6,0,0,-1,4,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+206,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+207,fail,-519.1,19.1,1,6,0,0,-1,4,0,1,A1 Goblini,res://Levels/Area01/01.tscn
+208,,0.0,19.1,0,0,0,0,-1,0,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+209,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+210,fail,-529.1,29.1,0,6,0,0,-1,4,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+211,fail,-543.0,43.0,0,6,0,0,-1,4,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+212,,0.0,43.0,0,0,0,0,-1,0,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+213,fail,-519.6,19.6,1,6,0,0,-1,4,0,1,A1 Goblini,res://Levels/Area01/01.tscn
+214,fail,-526.0,26.0,2,6,0,0,-1,4,0,3,A1 Goblini,res://Levels/Area01/01.tscn
+215,fail,-526.0,26.0,0,6,0,0,-1,4,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+216,fail,-518.7,18.7,0,6,0,0,-1,4,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+217,fail,-517.6,17.6,0,6,0,0,-1,4,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+218,fail,-673.2,173.2,4,6,0,0,-1,4,0,6,A1 Buff,res://Levels/Area01/03.tscn
+219,fail,-519.0,19.0,0,6,0,0,-1,4,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+220,fail,-528.1,28.1,1,6,0,0,-1,4,0,2,A1 Goblini,res://Levels/Area01/01.tscn
+221,fail,-528.4,28.4,0,6,0,0,-1,4,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+222,fail,-519.7,19.7,0,6,0,0,-1,4,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+223,fail,-513.8,13.8,0,6,0,0,-1,4,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+224,fail,-518.2,18.2,0,6,0,0,-1,4,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+225,fail,-514.2,14.2,1,6,0,0,-1,4,0,2,A1 Goblini,res://Levels/Area01/01.tscn
+226,fail,-511.3,11.3,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+227,,0.0,11.3,0,0,0,0,-1,0,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+228,fail,-508.7,8.7,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+229,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+230,fail,-513.1,13.1,0,7,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+231,fail,-519.9,19.9,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+232,,0.0,19.9,0,0,0,0,-1,0,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+233,fail,-517.6,17.6,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+234,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+235,fail,-512.7,12.7,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+236,fail,-511.2,11.2,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+237,fail,-627.6,127.6,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+238,fail,-511.4,11.4,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+239,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+240,fail,-517.7,17.7,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+241,fail,-521.0,21.0,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+242,fail,-522.5,22.5,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+243,fail,-520.3,20.3,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+244,fail,-509.9,9.9,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+245,fail,-522.0,22.0,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+246,fail,-511.4,11.4,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+247,fail,-512.4,12.4,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+248,,0.0,12.4,0,0,0,0,-1,0,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+249,fail,-510.7,10.7,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+250,fail,-511.1,11.1,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+251,fail,-526.0,26.0,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+252,,0.0,26.0,0,0,0,0,-1,0,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+253,fail,-525.0,25.0,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+254,,0.0,25.0,0,0,0,0,-1,0,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+255,fail,-527.3,27.3,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+256,,0.0,27.3,0,0,0,0,-1,0,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+257,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+258,fail,-514.4,14.4,0,7,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+259,,0.0,14.4,0,0,0,0,-1,0,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+260,fail,-517.8,17.8,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+261,fail,-514.5,14.5,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+262,fail,-514.6,14.6,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+263,fail,-510.7,10.7,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+264,,0.0,10.7,0,0,0,0,-1,0,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+265,fail,-508.4,8.4,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+266,fail,-523.4,23.4,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+267,fail,-509.0,9.0,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+268,fail,-515.1,15.1,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+269,fail,-515.4,15.4,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+270,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+271,fail,-548.8,48.8,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+272,fail,-521.1,21.1,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+273,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn
+274,fail,-540.0,40.0,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+275,fail,-512.4,12.4,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+276,fail,-537.0,37.0,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+277,fail,-520.6,20.6,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+278,,0.0,20.6,0,0,0,0,-1,0,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+279,fail,-514.2,14.2,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+280,fail,-517.7,17.7,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+281,fail,-543.9,43.9,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+282,fail,-510.1,10.1,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+283,fail,-532.7,32.7,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+284,fail,-521.2,21.2,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+285,fail,-512.4,12.4,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+286,,0.0,12.4,0,0,0,0,-1,0,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+287,fail,-509.5,9.5,0,6,0,0,-1,1,0,0,A1 Goblini,res://Levels/Area01/01.tscn
+288,truncated_room,-50.0,0.0,0,0,0,0,-1,0,0,0,Start,res://Levels/Area01/02.tscn

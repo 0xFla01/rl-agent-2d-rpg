@@ -1,0 +1,101 @@
+[gd_scene format=4 uid="uid://2p13wtrmfvqv"]
+
+[ext_resource type="Script" uid="uid://d2eyblbal755o" path="res://Levels/scripts/level.gd" id="1_xgghs"]
+[ext_resource type="AudioStream" uid="uid://io7jxqk648xa" path="res://Levels/music/example_music_01.ogg" id="2_u3xya"]
+[ext_resource type="PackedScene" uid="uid://diex2e34r23qo" path="res://Tile Maps/shop_tilemap_layer.tscn" id="4_5ajat"]
+[ext_resource type="PackedScene" uid="uid://dr4blo7ya448q" path="res://Levels/player_spawn.tscn" id="5_b5fy1"]
+[ext_resource type="PackedScene" uid="uid://vlpiuopcomwi" path="res://Levels/level_transition.tscn" id="7_4skut"]
+[ext_resource type="PackedScene" uid="uid://dc7eeqmi06iyj" path="res://Interactables/shopkeeper/shopkeeper.tscn" id="7_cdc6r"]
+[ext_resource type="Script" uid="uid://b405hrw22am82" path="res://Items/scripts/item_data.gd" id="8_54jjq"]
+[ext_resource type="Resource" uid="uid://dxy3p7nqr2saf" path="res://Items/potion_speed.tres" id="9_speed"]
+[ext_resource type="Resource" uid="uid://cm8vl6e4uawbj" path="res://Items/potion_berserker.tres" id="10_berserk"]
+[ext_resource type="Resource" uid="uid://crnvbf2cf7c8e" path="res://Items/ability_bomb.tres" id="11_bombs"]
+[ext_resource type="PackedScene" uid="uid://cf0a8hxch6kfd" path="res://Props/pot/pot.tscn" id="23_386ky"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_barrier"]
+size = Vector2(37, 48)
+
+[node name="02" type="Node2D" unique_id=129607003]
+y_sort_enabled = true
+script = ExtResource("1_xgghs")
+music = ExtResource("2_u3xya")
+
+[node name="ShopTilemapLayer" parent="." unique_id=933218017 instance=ExtResource("4_5ajat")]
+tile_map_data = PackedByteArray("AAACAAIAAAAFAAQAAAACAAMAAAAEAAMAAAACAAQAAAAFAAQAAAACAAUAAAADAAQAAAACAAYAAAAEAAMAAAADAAIAAAAFAAMAAAADAAMAAAAEAAMAAAADAAQAAAAFAAQAAAADAAUAAAAEAAQAAAADAAYAAAADAAMAAAAEAAIAAAAFAAQAAAAEAAMAAAAFAAMAAAAEAAQAAAAFAAQAAAAEAAUAAAAEAAQAAAAEAAYAAAAFAAQAAAAFAAIAAAAEAAMAAAAFAAMAAAAEAAMAAAAFAAQAAAADAAQAAAAFAAUAAAAEAAMAAAAFAAYAAAAFAAQAAAAGAAIAAAAFAAQAAAAGAAMAAAADAAQAAAAGAAQAAAAEAAMAAAAGAAUAAAADAAMAAAAGAAYAAAADAAMAAAAHAAIAAAADAAQAAAAHAAMAAAAFAAMAAAAHAAQAAAAEAAQAAAAHAAUAAAAEAAMAAAAHAAYAAAADAAQAAAAIAAIAAAAFAAMAAAAIAAMAAAADAAMAAAAIAAQAAAAEAAMAAAAIAAUAAAAEAAMAAAAIAAYAAAAFAAQAAAAJAAIAAAAEAAMAAAAJAAMAAAAEAAMAAAAJAAQAAAADAAMAAAAJAAUAAAAEAAMAAAAJAAYAAAAFAAMAAAAKAAIAAAADAAQAAAAKAAMAAAAFAAMAAAAKAAQAAAAEAAQAAAAKAAUAAAAEAAQAAAAKAAYAAAAFAAQAAAALAAIAAAADAAMAAAALAAMAAAAFAAMAAAALAAQAAAAFAAMAAAALAAUAAAAEAAMAAAALAAYAAAAEAAQAAAAHAAAAAAAEAA4AAAAHAAEAAAAEAA8AAAAIAAAAAAAFAAQAAAAIAAEAAAADAAMAAAAJAAAAAAAFAAMAAAAJAAEAAAAEAAQAAAAKAAAAAAAFAAQAAAAKAAEAAAADAAMAAAALAAAAAAAEAAQAAAALAAEAAAAEAAMAAAAFAAAAAAAEAAEAAAAFAAEAAAAEAAIAAAAGAAAAAAADAA4AAAAGAAEAAAADAA8AAAD/////AAAAAAAAAAD//wAAAAAAAAEAAAD//wEAAAAAAAIAAAAAAP//AAABAAAAAAAAAAAAAAABAAEAAAAAAAEAAAABAAIAAAABAP//AAACAAAAAAABAAAAAAACAAEAAAABAAEAAAACAAIAAAD//wcAAAAAAAUAAAD//wgAAAAAAAYAAAD//wkAAAAAAAcAAAAAAAcAAAABAAUAAAAAAAgAAAABAAYAAAAAAAkAAAABAAcAAAABAAcAAAACAAUAAAABAAgAAAACAAYAAAABAAkAAAACAAcAAAAMAAcAAAAGAAUAAAAMAAgAAAAGAAYAAAAMAAkAAAAGAAcAAAANAAcAAAAHAAUAAAANAAgAAAAHAAYAAAANAAkAAAAHAAcAAAAOAAcAAAAIAAUAAAAOAAgAAAAIAAYAAAAOAAkAAAAIAAcAAAAFAP3/AAAAAAAAAAAFAP7/AAAAAAEAAAAFAP//AAAGAAkAAAAGAP3/AAABAAAAAAAGAP7/AAABAAEAAAAGAP//AAABAAIAAAAHAP3/AAACAAAAAAAHAP7/AAACAAEAAAAHAP//AAACAAIAAAAMAP3/AAAGAAAAAAAMAP7/AAAGAAEAAAAMAP//AAAGAAIAAAANAP3/AAAHAAAAAAANAP7/AAAHAAEAAAANAP//AAAHAAIAAAAOAP3/AAAIAAAAAAAOAP7/AAAIAAEAAAAOAP//AAAIAAIAAAAIAP3/AAAAAAgAAAAIAP7/AAAAAAkAAAAIAP//AAAAAAoAAAAJAP3/AAABAAgAAAAJAP7/AAABAAkAAAAJAP//AAABAAoAAAAKAP3/AAACAAgAAAAKAP7/AAACAAkAAAAKAP//AAACAAoAAAALAP3/AAADAAgAAAALAP7/AAADAAkAAAALAP//AAADAAoAAAACAP//AAAEAAgAAAACAAAAAAAEAAkAAAACAAEAAAAEAAoAAAADAP//AAAEAAAAAAADAAAAAAAHAAgAAAADAAEAAAAHAAkAAAAEAP//AAAEAAAAAAAEAAAAAAAIAAgAAAAEAAEAAAAIAAkAAAAMAAAAAAAGAAMAAAAMAAEAAAAGAAQAAAANAAAAAAAHAAMAAAANAAEAAAAHAAQAAAAOAAAAAAAIAAMAAAAOAAEAAAAIAAQAAAAMAAIAAAAGAAMAAAAMAAMAAAAGAAQAAAANAAIAAAAHAAMAAAANAAMAAAAHAAQAAAAOAAIAAAAIAAMAAAAOAAMAAAAIAAQAAAAMAAQAAAAGAAMAAAAMAAUAAAAGAAMAAAANAAQAAAAHAAMAAAANAAUAAAAHAAMAAAAOAAQAAAAIAAMAAAAOAAUAAAAIAAMAAAAMAAYAAAAGAAQAAAANAAYAAAAHAAQAAAAOAAYAAAAIAAQAAAAJAAcAAAAIAAoAAAAJAAgAAAAIAAsAAAAJAAkAAAAFAAcAAAAKAAcAAAAEAAUAAAAKAAgAAAAEAAYAAAAKAAkAAAAEAAcAAAALAAcAAAAFAAUAAAALAAgAAAAFAAYAAAALAAkAAAAFAAcAAAACAAcAAAADAAUAAAACAAgAAAADAAYAAAACAAkAAAADAAcAAAADAAcAAAAEAAUAAAADAAgAAAAEAAYAAAADAAkAAAAEAAcAAAAEAAcAAAAFAAUAAAAEAAgAAAAFAAYAAAAEAAkAAAAFAAcAAAAFAAcAAAADAAUAAAAFAAgAAAADAAYAAAAFAAkAAAADAAcAAAAGAAcAAAAEAAUAAAAGAAgAAAAEAAYAAAAGAAkAAAAEAAcAAAAHAAcAAAADAAUAAAAHAAgAAAADAAYAAAAHAAkAAAADAAcAAAAIAAcAAAAHAAoAAAAIAAgAAAAHAAsAAAAIAAkAAAAEAAcAAAD//wUAAAAAAAMAAAD//wYAAAAAAAQAAAAAAAUAAAABAAMAAAAAAAYAAAABAAQAAAABAAUAAAACAAMAAAABAAYAAAACAAQAAAD//wIAAAAAAAMAAAD//wMAAAAAAAMAAAAAAAIAAAABAAMAAAAAAAMAAAABAAMAAAABAAIAAAACAAMAAAABAAMAAAACAAMAAAD//wQAAAAAAAQAAAAAAAQAAAABAAQAAAABAAQAAAACAAQAAAD///7/AAAJAAUAAAD///3/AAAJAAUAAAAAAP3/AAAJAAUAAAABAP3/AAAJAAUAAAACAP3/AAAJAAUAAAADAP3/AAAJAAUAAAAEAP3/AAAJAAUAAAAEAP7/AAAJAAUAAAADAP7/AAAJAAUAAAACAP7/AAAJAAUAAAABAP7/AAAJAAUAAAAAAP7/AAAJAAUAAAA=")
+
+[node name="ShopTilemapLayer2" parent="." unique_id=1738049838 instance=ExtResource("4_5ajat")]
+tile_map_data = PackedByteArray("AAAJAAIAAAAJAAAAAAAJAAMAAAAJAAEAAAAKAAIAAAAKAAAAAAAKAAMAAAAKAAEAAAALAAIAAAALAAAAAAALAAMAAAALAAEAAAA=")
+update_bounds = false
+
+[node name="PlayerSpawn" parent="." unique_id=1981588919 instance=ExtResource("5_b5fy1")]
+position = Vector2(131, 95)
+
+[node name="Pots" type="Node2D" parent="." unique_id=41261492]
+y_sort_enabled = true
+
+[node name="Pot" parent="Pots" unique_id=2094633188 instance=ExtResource("23_386ky")]
+position = Vector2(283, 104)
+
+[node name="Pot2" parent="Pots" unique_id=1178903438 instance=ExtResource("23_386ky")]
+position = Vector2(259, 83)
+
+[node name="Pot3" parent="Pots" unique_id=1761816091 instance=ExtResource("23_386ky")]
+position = Vector2(258, 104)
+
+[node name="Pot4" parent="Pots" unique_id=799621398 instance=ExtResource("23_386ky")]
+position = Vector2(245, 92)
+
+[node name="Pot5" parent="Pots" unique_id=1475174803 instance=ExtResource("23_386ky")]
+position = Vector2(234, 79)
+
+[node name="Pot6" parent="Pots" unique_id=885837390 instance=ExtResource("23_386ky")]
+position = Vector2(231, 102)
+
+[node name="Pot7" parent="Pots" unique_id=107099044 instance=ExtResource("23_386ky")]
+position = Vector2(216, 88)
+
+[node name="Pot8" parent="Pots" unique_id=947618701 instance=ExtResource("23_386ky")]
+position = Vector2(202, 75)
+
+[node name="Pot9" parent="Pots" unique_id=1874655859 instance=ExtResource("23_386ky")]
+position = Vector2(271, 117)
+
+[node name="Pot10" parent="Pots" unique_id=360903945 instance=ExtResource("23_386ky")]
+position = Vector2(264, 10)
+
+[node name="Pot11" parent="Pots" unique_id=1686016179 instance=ExtResource("23_386ky")]
+position = Vector2(376, 10)
+
+[node name="Pot12" parent="Pots" unique_id=1434603130 instance=ExtResource("23_386ky")]
+position = Vector2(352, 10)
+
+[node name="Pot13" parent="Pots" unique_id=69457549 instance=ExtResource("23_386ky")]
+position = Vector2(373, 93)
+
+[node name="Pot14" parent="Pots" unique_id=1782526996 instance=ExtResource("23_386ky")]
+position = Vector2(73, 75)
+
+[node name="LevelTransition" parent="." unique_id=515134996 instance=ExtResource("7_4skut")]
+position = Vector2(129, 60)
+target_transition_area = ""
+center_player = true
+size = 1
+side = 2
+
+[node name="Shopkeeper" parent="." unique_id=1214377649 instance=ExtResource("7_cdc6r")]
+position = Vector2(333, 94)
+shop_inventory = Array[ExtResource("8_54jjq")]([ExtResource("9_speed"), ExtResource("10_berserk"), ExtResource("11_bombs")])
+
+[node name="LevelTransition2" parent="." unique_id=801546956 instance=ExtResource("7_4skut")]
+position = Vector2(291, 243)
+level = "uid://h31qtck2ucjy"
+side = 3
+
+[node name="EntranceBarrier" type="StaticBody2D" parent="." unique_id=1426086795]
+position = Vector2(129, 55)
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EntranceBarrier" unique_id=93864302]
+position = Vector2(-0.5, -16)
+shape = SubResource("RectangleShape2D_barrier")

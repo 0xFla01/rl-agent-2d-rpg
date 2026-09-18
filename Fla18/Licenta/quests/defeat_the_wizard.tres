@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Quest" load_steps=2 format=3 uid="uid://dwizardquest1"]
+
+[ext_resource type="Script" uid="uid://ej3xbi7xbvg1" path="res://quests/scripts/quest_resource.gd" id="1_wquest"]
+
+[resource]
+script = ExtResource("1_wquest")
+title = "Defeat the Dark Wizard"
+description = "The wanderer Oren needs your help. Find the dungeon to the north and defeat the Dark Wizard who threatens the land."
+steps = Array[String](["Find the Dungeon Entrance", "Defeat the Dark Wizard"])
+reward_xp = 0

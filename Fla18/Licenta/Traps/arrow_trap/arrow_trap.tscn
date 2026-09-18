@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://arrow_trap_001"]
+
+[ext_resource type="Script" path="res://Traps/arrow_trap/arrow_trap.gd" id="1_atrap"]
+[ext_resource type="Texture2D" path="res://Traps/arrow_trap/arrow_trap.png" id="2_atrap"]
+
+[node name="ArrowTrap" type="Node2D"]
+script = ExtResource("1_atrap")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_atrap")
+
+[node name="ArrowSpawn" type="Marker2D" parent="."]
+position = Vector2(16, 0)
+
+[node name="FireTimer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = false

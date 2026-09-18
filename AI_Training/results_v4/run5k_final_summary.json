@@ -1,0 +1,128 @@
+{
+  "run": "5k_final",
+  "n_episodes_total": 866,
+  "n_episodes_with_positions": 522,
+  "last_write": "2026-05-22 03:32",
+  "quarters": [
+    {
+      "Q": "Q1",
+      "ep_range": "0-172",
+      "n_eps_with_pos": 148,
+      "A1/02": 139,
+      "A1/01": 139,
+      "A1/03": 136,
+      "A2/01": 66,
+      "A2/01_nat": 66,
+      "A2/02": 1,
+      "SHOP": 0,
+      "trigger_A1/03": 23,
+      "trigger_pct": "15.5%",
+      "A2/01_nat_pct": "44.59%"
+    },
+    {
+      "Q": "Q2",
+      "ep_range": "173-345",
+      "n_eps_with_pos": 136,
+      "A1/02": 122,
+      "A1/01": 127,
+      "A1/03": 118,
+      "A2/01": 55,
+      "A2/01_nat": 55,
+      "A2/02": 0,
+      "SHOP": 0,
+      "trigger_A1/03": 27,
+      "trigger_pct": "19.9%",
+      "A2/01_nat_pct": "40.44%"
+    },
+    {
+      "Q": "Q3",
+      "ep_range": "346-518",
+      "n_eps_with_pos": 118,
+      "A1/02": 111,
+      "A1/01": 115,
+      "A1/03": 104,
+      "A2/01": 47,
+      "A2/01_nat": 47,
+      "A2/02": 1,
+      "SHOP": 0,
+      "trigger_A1/03": 20,
+      "trigger_pct": "16.9%",
+      "A2/01_nat_pct": "39.83%"
+    },
+    {
+      "Q": "Q4",
+      "ep_range": "519-691",
+      "n_eps_with_pos": 71,
+      "A1/02": 71,
+      "A1/01": 71,
+      "A1/03": 65,
+      "A2/01": 5,
+      "A2/01_nat": 5,
+      "A2/02": 1,
+      "SHOP": 0,
+      "trigger_A1/03": 7,
+      "trigger_pct": "9.9%",
+      "A2/01_nat_pct": "7.04%"
+    },
+    {
+      "Q": "Q5",
+      "ep_range": "692-865",
+      "n_eps_with_pos": 49,
+      "A1/02": 49,
+      "A1/01": 49,
+      "A1/03": 46,
+      "A2/01": 1,
+      "A2/01_nat": 1,
+      "A2/02": 0,
+      "SHOP": 0,
+      "trigger_A1/03": 1,
+      "trigger_pct": "2.0%",
+      "A2/01_nat_pct": "2.04%"
+    }
+  ],
+  "totals": {
+    "n": 522,
+    "A1/03": 469,
+    "A2/01": 174,
+    "A2/01_nat": 174,
+    "A2/02": 3,
+    "trigger_A1/03": 78,
+    "SHOP": 0
+  },
+  "a202_episodes": [
+    {
+      "ep": 17,
+      "samples": 4,
+      "scenes": [
+        "A1/03",
+        "A2/01",
+        "A2/02",
+        "res://Levels/Area01/02_shop.tscn"
+      ]
+    },
+    {
+      "ep": 488,
+      "samples": 5,
+      "scenes": [
+        "A1/01",
+        "A1/02",
+        "A1/03",
+        "A2/01",
+        "A2/02",
+        "res://Levels/Area01/02_shop.tscn"
+      ]
+    },
+    {
+      "ep": 637,
+      "samples": 10,
+      "scenes": [
+        "A1/01",
+        "A1/02",
+        "A1/03",
+        "A2/01",
+        "A2/02",
+        "res://Levels/Area01/02_shop.tscn"
+      ]
+    }
+  ]
+}

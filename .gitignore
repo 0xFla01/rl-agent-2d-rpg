@@ -1,0 +1,30 @@
+# --- Model checkpoints and training artifacts -------------------------------
+# Regenerable, and roughly 1.4 GB. Kept out of the repo on purpose.
+models/
+models_*/
+*.zip
+
+# --- Raw training telemetry -------------------------------------------------
+# ~500 MB of per-step episode logs. The charts in results_* are derived from
+# these and are what actually belong in the repo.
+*.jsonl
+
+# --- Python -----------------------------------------------------------------
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+*.egg-info/
+
+# --- Godot ------------------------------------------------------------------
+.godot/
+.import/
+*.translation
+.mono/
+mono_crash.*.json
+
+# --- Tooling / OS -----------------------------------------------------------
+.claude/
+Thumbs.db
+.DS_Store

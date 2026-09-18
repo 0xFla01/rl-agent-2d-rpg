@@ -1,0 +1,172 @@
+[gd_scene format=4 uid="uid://bnpo242tfas6l"]
+
+[ext_resource type="Script" uid="uid://d2eyblbal755o" path="res://Levels/scripts/level.gd" id="1_71foy"]
+[ext_resource type="AudioStream" uid="uid://io7jxqk648xa" path="res://Levels/music/example_music_01.ogg" id="2_p2fdc"]
+[ext_resource type="PackedScene" uid="uid://bt8nycc2ev1qs" path="res://GeneralNodes/area_trigger/area_trigger.tscn" id="3_j6vpj"]
+[ext_resource type="PackedScene" uid="uid://cq32mohonpsw3" path="res://Tile Maps/grass-tiles-01.tscn" id="4_iqbtg"]
+[ext_resource type="PackedScene" uid="uid://dr4blo7ya448q" path="res://Levels/player_spawn.tscn" id="5_xjcpg"]
+[ext_resource type="PackedScene" uid="uid://vlpiuopcomwi" path="res://Levels/level_transition.tscn" id="6_7src1"]
+[ext_resource type="PackedScene" uid="uid://d4igjv570x7c4" path="res://Props/Plants/plant.tscn" id="7_ikg4w"]
+[ext_resource type="Texture2D" uid="uid://fwby631k8pda" path="res://Tile Maps/Sprites/dungeon_entrance.png" id="8_h7p5o"]
+[ext_resource type="Script" uid="uid://bwx222a4l2s5v" path="res://Tile Maps/level_tile_map_layer.gd" id="9_kwybj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hvxrb"]
+size = Vector2(276, 224)
+
+[sub_resource type="Animation" id="Animation_bchre"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DirectionalLight2D:energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_x30po"]
+resource_name = "fade_to_black"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DirectionalLight2D:energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.5]
+}
+
+[sub_resource type="Animation" id="Animation_jnq63"]
+resource_name = "fade_to_normal"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DirectionalLight2D:energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.5, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4jsar"]
+_data = {
+&"RESET": SubResource("Animation_bchre"),
+&"fade_to_black": SubResource("Animation_x30po"),
+&"fade_to_normal": SubResource("Animation_jnq63")
+}
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bm8hg"]
+texture = ExtResource("8_h7p5o")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+4:3/0 = 0
+5:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+2:4/0 = 0
+3:4/0 = 0
+4:4/0 = 0
+5:4/0 = 0
+0:5/0 = 0
+1:5/0 = 0
+2:5/0 = 0
+3:5/0 = 0
+4:5/0 = 0
+5:5/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_6yofg"]
+sources/0 = SubResource("TileSetAtlasSource_bm8hg")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_barrier"]
+size = Vector2(189.5, 40)
+
+[node name="04" type="Node2D" unique_id=467164963]
+y_sort_enabled = true
+script = ExtResource("1_71foy")
+music = ExtResource("2_p2fdc")
+
+[node name="AreaTrigger" parent="." unique_id=1421296016 instance=ExtResource("3_j6vpj")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AreaTrigger" unique_id=722713659]
+position = Vector2(378, 144)
+shape = SubResource("RectangleShape2D_hvxrb")
+
+[node name="grass-tiles-01" parent="." unique_id=1178190801 instance=ExtResource("4_iqbtg")]
+tile_map_data = PackedByteArray("AAAAAP//AAAOAAUAAAAAAAAAAAAOAAUAAAAAAAEAAAAOAAUAAAAAAAIAAAAOAAUAAAAAAAMAAAAOAAUAAAAAAAQAAAAOAAUAAAAAAAUAAAAOAAUAAAAAAAYAAAAOAAUAAAAAAAcAAAAOAAcAAAAAAAgAAAAMAAQAAAABAP//AAAHAAUAAAABAAAAAAAHAAYAAAABAAEAAAACAAIAAAABAAIAAAACAAIAAAABAAQAAAACAAIAAAABAAUAAAACAAIAAAABAAYAAAACAAIAAAABAAcAAAACAAIAAAABAAgAAAAMAAQAAAACAAEAAAACAAAAAAACAAIAAAACAAAAAAACAAMAAAACAAAAAAACAAQAAAACAAAAAAACAAUAAAACAAAAAAACAAYAAAACAAAAAAACAAcAAAACAAAAAAACAAgAAAAMAAQAAAADAAEAAAAAAAAAAAADAAIAAAAAAAAAAAADAAMAAAAAAAAAAAADAAQAAAAAAAAAAAADAAUAAAAAAAAAAAADAAYAAAAAAAAAAAADAAcAAAAAAAAAAAADAAgAAAALAAQAAAAEAAEAAAABAAAAAAAEAAIAAAABAAAAAAAEAAMAAAABAAAAAAAEAAQAAAABAAAAAAAEAAUAAAACAAEAAAAEAAYAAAABAAAAAAAEAAcAAAABAAAAAAAEAAgAAAAMAAQAAAAFAP//AAAEAAUAAAAFAAAAAAAEAAYAAAAFAAEAAAACAAAAAAAFAAIAAAACAAAAAAAFAAMAAAACAAAAAAAFAAQAAAACAAAAAAAFAAUAAAACAAAAAAAFAAYAAAACAAAAAAAFAAcAAAACAAAAAAAFAAgAAAANAAQAAAAGAP//AAAEAAUAAAAGAAAAAAAEAAYAAAAGAAEAAAAAAAAAAAAGAAIAAAAAAAAAAAAGAAMAAAAAAAAAAAAGAAQAAAAAAAAAAAAGAAUAAAAAAAAAAAAGAAYAAAAAAAAAAAAGAAcAAAAAAAAAAAAGAAgAAAALAAQAAAAHAP//AAAEAAUAAAAHAAAAAAAEAAYAAAAHAAEAAAABAAAAAAAHAAIAAAABAAAAAAAHAAMAAAABAAAAAAAHAAQAAAABAAAAAAAHAAUAAAABAAAAAAAHAAYAAAABAAAAAAAHAAcAAAABAAAAAAAHAAgAAAALAAQAAAAIAP//AAAEAAUAAAAIAAAAAAAEAAYAAAAIAAEAAAACAAAAAAAIAAIAAAACAAAAAAAIAAMAAAACAAAAAAAIAAQAAAACAAAAAAAIAAUAAAACAAAAAAAIAAYAAAACAAAAAAAIAAcAAAACAAAAAAAIAAgAAAAMAAQAAAAJAP//AAACAAUAAAAJAAAAAAACAAYAAAAJAAEAAAAAAAAAAAAJAAIAAAAAAAAAAAAJAAMAAAAAAAAAAAAJAAQAAAAAAAAAAAAJAAUAAAAAAAAAAAAJAAYAAAAAAAAAAAAJAAcAAAAAAAAAAAAJAAgAAAALAAQAAAAKAP//AAADAAUAAAAKAAAAAAADAAYAAAAKAAEAAAABAAAAAAAKAAIAAAABAAAAAAAKAAMAAAABAAAAAAAKAAQAAAABAAAAAAAKAAUAAAABAAAAAAAKAAYAAAABAAAAAAAKAAcAAAABAAAAAAAKAAgAAAALAAQAAAALAP//AAADAAUAAAALAAAAAAADAAYAAAALAAEAAAACAAAAAAALAAIAAAACAAAAAAALAAMAAAACAAAAAAALAAQAAAACAAAAAAALAAUAAAACAAAAAAALAAYAAAACAAAAAAALAAcAAAACAAAAAAALAAgAAAAMAAQAAAAMAP//AAACAAUAAAAMAAAAAAACAAYAAAAMAAEAAAAAAAAAAAAMAAIAAAAAAAAAAAAMAAMAAAAAAAAAAAAMAAQAAAAAAAAAAAAMAAUAAAAAAAAAAAAMAAYAAAAAAAAAAAAMAAcAAAAAAAAAAAAMAAgAAAANAAQAAAANAP//AAADAAUAAAANAAAAAAADAAYAAAANAAEAAAABAAAAAAANAAIAAAABAAAAAAANAAMAAAABAAAAAAANAAQAAAABAAAAAAANAAUAAAABAAAAAAANAAYAAAABAAAAAAANAAcAAAABAAAAAAANAAgAAAAMAAQAAAAOAP//AAAEAAUAAAAOAAAAAAAEAAYAAAAOAAEAAAACAAAAAAAOAAIAAAACAAAAAAAOAAMAAAACAAAAAAAOAAQAAAACAAAAAAAOAAUAAAACAAAAAAAOAAYAAAACAAAAAAAOAAcAAAACAAAAAAAOAAgAAAANAAQAAAAPAP//AAACAAUAAAAPAAAAAAACAAYAAAAPAAEAAAAAAAAAAAAPAAIAAAAAAAAAAAAPAAMAAAAAAAAAAAAPAAQAAAAAAAAAAAAPAAUAAAAAAAAAAAAPAAYAAAAAAAAAAAAPAAcAAAAAAAAAAAAPAAgAAAALAAQAAAAQAP//AAADAAUAAAAQAAAAAAADAAYAAAAQAAEAAAAKAAQAAAAQAAIAAAAKAAUAAAAQAAMAAAAKAAUAAAAQAAQAAAAKAAUAAAAQAAUAAAAKAAUAAAAQAAYAAAAKAAYAAAAQAAcAAAAKAAcAAAAQAAgAAAAMAAQAAAAAAP7/AAAOAAQAAAABAP7/AAAHAAQAAAADAP7/AAALAAUAAAAFAP7/AAADAAQAAAAGAP7/AAAEAAQAAAAKAP7/AAACAAQAAAALAP7/AAACAAQAAAAMAP7/AAAEAAQAAAANAP7/AAACAAQAAAAOAP7/AAACAAQAAAAPAP7/AAADAAQAAAAQAP7/AAAEAAQAAAAHAP7/AAAEAAQAAAAIAP7/AAAEAAQAAAAJAP7/AAACAAQAAAABAAMAAAACAAIAAAACAP7/AAABAAAAAAACAP//AAABAAEAAAACAAAAAAABAAIAAAADAAAAAAALAAUAAAADAP//AAALAAUAAAAEAP//AAAIAAUAAAAEAP7/AAAIAAQAAAAEAAAAAAAIAAYAAAA=")
+
+[node name="PlayerSpawn" parent="." unique_id=437384385 instance=ExtResource("5_xjcpg")]
+position = Vector2(99, 52)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=384773133]
+libraries/ = SubResource("AnimationLibrary_4jsar")
+
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="." unique_id=429022449]
+energy = 0.0
+blend_mode = 1
+
+[node name="LevelTransition" parent="." unique_id=234779785 instance=ExtResource("6_7src1")]
+position = Vector2(99, 29)
+level = "uid://cooteplx34jjo"
+side = 2
+
+[node name="Plant" parent="." unique_id=789743376 instance=ExtResource("7_ikg4w")]
+position = Vector2(159, 49)
+
+[node name="Plant2" parent="." unique_id=1769379420 instance=ExtResource("7_ikg4w")]
+position = Vector2(478, 231)
+
+[node name="Plant3" parent="." unique_id=296960801 instance=ExtResource("7_ikg4w")]
+position = Vector2(147, 221)
+
+[node name="LevelTileMapLayer" type="TileMapLayer" parent="." unique_id=709846475]
+tile_map_data = PackedByteArray("AAAaAPz/AAAAAAAAAAAaAP3/AAAAAAEAAAAaAP7/AAAAAAIAAAAaAP//AAAAAAMAAAAaAAAAAAAAAAQAAAAaAAEAAAAAAAUAAAAbAPz/AAABAAAAAAAbAP3/AAABAAEAAAAbAP7/AAABAAIAAAAbAP//AAABAAMAAAAbAAAAAAABAAQAAAAbAAEAAAABAAUAAAAcAPz/AAACAAAAAAAcAP3/AAACAAEAAAAcAP7/AAACAAIAAAAcAP//AAACAAMAAAAcAAAAAAACAAQAAAAcAAEAAAACAAUAAAAdAPz/AAADAAAAAAAdAP3/AAADAAEAAAAdAP7/AAADAAIAAAAdAP//AAADAAMAAAAdAAAAAAADAAQAAAAdAAEAAAADAAUAAAAeAPz/AAAEAAAAAAAeAP3/AAAEAAEAAAAeAP7/AAAEAAIAAAAeAP//AAAEAAMAAAAeAAAAAAAEAAQAAAAeAAEAAAAEAAUAAAAfAPz/AAAFAAAAAAAfAP3/AAAFAAEAAAAfAP7/AAAFAAIAAAAfAP//AAAFAAMAAAAfAAAAAAAFAAQAAAAfAAEAAAAFAAUAAAA=")
+tile_set = SubResource("TileSet_6yofg")
+script = ExtResource("9_kwybj")
+update_bounds = false
+metadata/_custom_type_script = "uid://bwx222a4l2s5v"
+
+[node name="LevelTransition2" parent="." unique_id=478504625 instance=ExtResource("6_7src1")]
+position = Vector2(462, 33)
+level = "uid://fxcoynik8gug"
+side = 2
+
+[node name="EntranceBarrier" type="StaticBody2D" parent="." unique_id=270262192]
+position = Vector2(15, 158)
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EntranceBarrier" unique_id=140117742]
+position = Vector2(62, -149)
+shape = SubResource("RectangleShape2D_barrier")

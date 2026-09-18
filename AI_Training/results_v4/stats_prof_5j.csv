@@ -1,0 +1,11 @@
+Camera,5f (baseline anterior),5g (regresie),5h pilot,5h_v2,5j (ULTIMUL — cap-coada)
+A1/02 (Start),419,280,372,227,440
+A1/01 (Combat),394,276,370,231,439
+A1/03 (Buff),288,152,253,260,234
+A2/01 (Wave + Pod),176,110,147,87,12
+SHOP,0,1,1,1,1
+A2/02 (Lever),0,1,1,1,0
+A1/04 (Dungeon Entry),0,1,1,0,0
+D01/02 (Hub),0,1,1,0,0
+D01/03 (Wave Mgr),0,1,1,0,0
+D01/04 (BOSS),0,1,1,0,0

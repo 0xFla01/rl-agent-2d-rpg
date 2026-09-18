@@ -1,0 +1,51 @@
+OBSERVATII COMPORTAMENT AI
+Analiza automata generata de analyze_progress.py
+Data: 2026-05-18 18:59
+Total episoade analizate: 119  (treime1=39, treime2=40, treime3=40)
+
+================================================================
+1. EVOLUTIA WIN-RATE
+================================================================
+   Prima treime  (  39 ep.) :   0.0%
+   A doua treime (  40 ep.) :   0.0%
+   Ultima treime (  40 ep.) :   0.0%
+   Trend: RELATIV STABIL
+   -> Agentul nu imbunatateste semnificativ capacitatea de a castiga.
+
+================================================================
+2. PROGRES PE HARTA  (scala 1-11, 11 = camera boss)
+================================================================
+   Prima treime  : 1.18  (Start)
+   A doua treime : 1.38  (Start)
+   Ultima treime : 1.38  (Start)
+   Trend: RELATIV STABIL
+   Boss atins    : 0% -> 0% -> 0%
+   -> Agentul stagneaza la aceeasi adancime.
+
+================================================================
+3. DAMAGE SUFERIT / EPISOD  (scade = evita mai bine)
+================================================================
+   Prima treime  : 0.8 dmg/run
+   A doua treime : 1.2 dmg/run
+   Ultima treime : 1.5 dmg/run
+   Trend: RELATIV STABIL
+   -> Agentul nu imbunatateste semnificativ evitarea.
+
+================================================================
+4. KILL-URI / EPISOD
+================================================================
+   Prima treime  : 0.2 kill-uri
+   A doua treime : 0.7 kill-uri
+   Ultima treime : 1.0 kill-uri
+   Trend: RELATIV STABIL
+   -> Numarul de kill-uri este relativ constant.
+
+================================================================
+NOTE METODOLOGICE
+================================================================
+   - Analiza imparte antrenarea in 3 treimi egale.
+   - 'Crestere clara' (win-rate) = diferenta > 5 pp intre treimi.
+   - 'Crestere clara' (adancime) = diferenta > 0.5 intre treimi.
+   - Graficele PNG din acelasi folder ofera detalii vizuale.
+   - Fisierul episoade.csv poate fi importat in Excel/SPSS.
+   - boss_hp_min = -1 in CSV inseamna ca agentul nu a ajuns la boss in acel run.

@@ -1,0 +1,595 @@
+"""
+Gymnasium environment pentru Dark Wizard speedrun game.
+Jocul trebuie sa ruleze in Godot cu AI mode activ (F2).
+"""
+
+import os
+import json
+import time
+
+import numpy as np
+import gymnasium as gym
+
+# ── paths ──────────────────────────────────────────────────────────────────────
+# Run6: dir configurabil prin AI_STATE_DIR (pentru instante paralele); default = path-ul vechi.
+_BASE   = os.environ.get("AI_STATE_DIR") or os.path.join(
+    os.environ["APPDATA"], "Godot", "app_userdata", "VERSIUNE FINALA")
+STATE_FILE     = os.path.join(_BASE, "ai_state.json")
+ACTION_FILE    = os.path.join(_BASE, "ai_action.json")
+EPISODE_FILE   = os.path.join(_BASE, "ai_episode.json")
+POSITIONS_FILE = os.path.join(os.path.dirname(__file__), "positions.jsonl")
+# Run5l_v8b: diagnostic timing log — masoara gap real intre step()-uri
+# Set STEP_TIMING_ENABLED=0 in env ca sa dezactivezi (default activ)
+TIMING_LOG     = os.path.join(os.path.dirname(__file__), "step_timing.jsonl")
+TIMING_ENABLED = os.environ.get("STEP_TIMING_ENABLED", "0") == "1"
+TIMING_SAMPLE  = 5  # log la fiecare 5 step-uri (reduce I/O overhead)
+
+# ── constante observation ──────────────────────────────────────────────────────
+MAX_ENEMIES  = 20      # slots fixe pentru inamici
+WORLD_SCALE  = 1000.0  # normalizare coordonate world
+VEL_SCALE    = 300.0   # Run7: normalizare viteza proiectile (max speed ~250) pt dodge
+MAX_TIMER    = 3600.0  # Filmare: 1800→3600 (60 min) — de la timer 22:03 (1323s) raman ~38 min joc
+STEP_WAIT    = float(os.environ.get("AI_STEP_WAIT", "0.08"))  # sincronizat cu EXPORT_INTERVAL din joc
+                                                              # (schimba SI EXPORT_INTERVAL in Godot!)
+
+MAX_ORBS    = 6   # slots pentru orburi boss
+MAX_STATUES = 1   # slots statui dungeon
+MAX_PLATES  = 1   # slots placi de presiune
+MAX_TRAPS   = 3   # cele mai apropiate 3 capcane in obs
+MAX_LICH_PROJ = 3 # proiectile lich apropiate
+MAX_TRAP_ARROWS = 3 # sageti zburatoare trap
+MAX_ITEM_CHESTS = 3 # chest-uri item (goblin) cu ability deterministic
+MAX_LEVERS  = 4   # levere Area02/02
+MAX_PICKUPS = 3   # gems/bombs/arrows pe jos
+
+# Limita de steps per camera — depasirea truncheaza episodul cu penalitate
+ROOM_STEP_LIMITS = {
+    "res://Levels/Area01/02.tscn":      400,   # NPC room
+    "res://Levels/Area01/01.tscn":      900,   # Goblins
+    "res://Levels/Area01/03.tscn":      900,   # Buff room
+    "res://Levels/Area02/01.tscn":     1500,   # Wave room
+    "res://Levels/Area02/02.tscn":     4000,   # Run5l_v7b: 2500→4000 (lever puzzle, timp lung pt explorare)
+    "res://Levels/Area01/04.tscn":     1500,   # Dungeon entry (800→1500)
+    "res://Levels/Dungeon01/01.tscn":  2500,   # Statuie puzzle (1500→2500)
+    "res://Levels/Dungeon01/02.tscn":  2500,   # Hub (1500→2500)
+    "res://Levels/Dungeon01/03.tscn":  4000,   # Wave manager (2500→4000)
+    "res://Levels/Dungeon01/04.tscn":  5000,   # Boss (3000→5000)
+}
+ROOM_STEP_PENALTY = -50.0
+ROOM_EXIT_BONUS_PER_STEP = 0.04   # boost: dublu fata de 0.02 — incurajeaza mai puternic finalizare rapida
+
+BUFF_ID_LIST = [
+    "big_damage", "charge_master", "kill_stack", "speed_boost", "extra_dash",
+    "ability_power", "iron_will", "glass_cannon", "bloodlust", "ghost_blade",
+    "last_stand", "momentum", "double_strike", "cheat_death", "frenzy",
+]
+MAX_CHESTS = 3
+BOSS_MAX_HP = 300   # Run8b: boss redus 500->300 (mai bland pt AI)
+MAX_GEMS    = 200
+
+SCENE_LIST = [
+    "res://Levels/Area01/02.tscn",
+    "res://Levels/Area01/01.tscn",
+    "res://Levels/Area01/03.tscn",
+    "res://Levels/Area02/01.tscn",
+    "res://Levels/Area01/02_shop.tscn",
+    "res://Levels/Area02/02.tscn",
+    "res://Levels/Area01/04.tscn",
+    "res://Levels/Dungeon01/01.tscn",
+    "res://Levels/Dungeon01/02.tscn",
+    "res://Levels/Dungeon01/03.tscn",
+    "res://Levels/Dungeon01/04.tscn",
+]
+
+# ── directii actiune ───────────────────────────────────────────────────────────
+# index → (move_x, move_y)
+DIRECTIONS = [
+    ( 0.0,  0.0),  # 0 = idle
+    ( 0.0, -1.0),  # 1 = sus
+    ( 0.0,  1.0),  # 2 = jos
+    (-1.0,  0.0),  # 3 = stanga
+    ( 1.0,  0.0),  # 4 = dreapta
+    (-1.0, -1.0),  # 5 = stanga-sus
+    ( 1.0, -1.0),  # 6 = dreapta-sus
+    (-1.0,  1.0),  # 7 = stanga-jos
+    ( 1.0,  1.0),  # 8 = dreapta-jos
+]
+
+
+class DarkWizardEnv(gym.Env):
+    """
+    Action space: MultiDiscrete([9, 2, 2, 2, 2, 2])
+        - [0] directie: 0=idle, 1=sus, 2=jos, 3=stanga, 4=dreapta, 5-8=diagonale
+        - [1] attack:        0/1
+        - [2] dash:          0/1
+        - [3] ability:       0/1
+        - [4] interact:      0/1  (C langa NPC/chest/usa)
+        - [5] switch_ability: 0/1 (schimba intre boomerang/arrow/grapple)
+
+    Observation: vector float32 de dimensiune fixa:
+        player(5) + buffs(8) + enemies(MAX*4) + misc(3) + chests(1+MAX*3) + boss(4) + orbs(MAX*2) + extra(3) = 125
+    """
+
+    metadata = {"render_modes": []}
+
+    def __init__(self):
+        super().__init__()
+
+        self.action_space = gym.spaces.MultiDiscrete([9, 2, 2, 2, 2, 2])
+
+        obs_size = (
+            7 + 8 + MAX_ENEMIES * 4 + 3                # player+buffs+enemies+misc
+            + 1 + MAX_CHESTS * 3                        # chests buff
+            + 4 + MAX_ORBS * 4                          # boss (orbs: +vx,vy Run7)
+            + 3 + 6 + 2 + 1                             # scene/exit/ability/etc
+            + MAX_STATUES * 3 + MAX_PLATES * 3 + 3      # statues/plates/npc
+            + 3 + 2                                     # nearest_trap (legacy) + wave_info
+            + MAX_TRAPS * 3                             # NOU: top 3 traps
+            + MAX_LICH_PROJ * 4                         # NOU: lich projectiles (+vx,vy Run7)
+            + MAX_TRAP_ARROWS * 4                       # NOU: sageti zburatoare (+vx,vy Run7)
+            + MAX_ITEM_CHESTS * 3                       # NOU: goblin item chests
+            + 2                                         # NOU: arrows + bombs count
+            + MAX_LEVERS * 3                            # NOU v3b: levere Area02/02 (rel_x, rel_y, activated)
+            + 4                                         # NOU v3b: locked_door (rel_x, rel_y, found, has_key)
+            + 3                                         # NOU v3b: item_drop (rel_x, rel_y, found)
+            + MAX_PICKUPS * 3                           # NOU v3c: pickups pe jos (rel_x, rel_y, type_norm)
+            + 3                                         # NOU v3c: boss_pos (rel_x, rel_y, found)
+            + 1                                         # NOU v3c: boss_phase (0-3 normalizat)
+        )  # = 238 total (Run7: 214 + viteze proiectile orbs/lich/arrows; verificat via shape)
+        self.observation_space = gym.spaces.Box(
+            low=-2.0, high=2.0, shape=(obs_size,), dtype=np.float32
+        )
+
+        self._last_state: dict = {}
+        self._step_count: int  = 0
+        self._visited:    set  = set()  # (grid_x, grid_y, scene_idx) per episod
+        self._episode_positions: list = []
+        self._episode_num: int  = 0
+        self._room_step_count: int  = 0
+        self._current_scene: str    = ""
+        self._truncation_reason: str = ""
+
+    # ── I/O cu jocul ──────────────────────────────────────────────────────────
+
+    def _read_godot_episode(self) -> int:
+        """Citeste counter-ul de episode din ai_episode.json (sursa de adevar = HUD).
+        Asigura ca pozitiile salvate au acelasi numar ca HUD-ul Godot."""
+        try:
+            with open(EPISODE_FILE, "r") as f:
+                return int(json.load(f).get("episode", 0))
+        except Exception:
+            return self._episode_num
+
+    def _read_state(self, retries: int = 10) -> dict | None:
+        for _ in range(retries):
+            try:
+                with open(STATE_FILE, "r") as f:
+                    return json.load(f)
+            except Exception:
+                time.sleep(0.05)
+        return None
+
+    def _write_action(self,
+                      move_x: float = 0.0,
+                      move_y: float = 0.0,
+                      attack: bool  = False,
+                      dash:   bool  = False,
+                      ability: bool = False,
+                      interact: bool = False,
+                      switch_ability: bool = False,
+                      reset:  bool  = False,
+                      reset_reason: str = "") -> None:
+        payload = {
+            "move_x": round(float(move_x), 3),
+            "move_y": round(float(move_y), 3),
+            "attack":        bool(attack),
+            "dash":          bool(dash),
+            "interact":      bool(interact),
+            "ability":       bool(ability),
+            "switch_ability": bool(switch_ability),
+            "reset":         bool(reset),
+            "reset_reason":  reset_reason,
+            # Run6 fix stuck-command: timestamp wall-clock pt stall detection precisa in Godot
+            # (inlocuieste mtime — 1s precizie pe Windows, nesigur cu os.replace atomic).
+            "t":             time.time(),
+        }
+        tmp = ACTION_FILE + ".tmp"
+        try:
+            with open(tmp, "w") as f:
+                json.dump(payload, f)
+            os.replace(tmp, ACTION_FILE)
+        except Exception:
+            pass
+
+    # ── conversii ─────────────────────────────────────────────────────────────
+
+    def _decode_action(self, action: np.ndarray):
+        dir_idx, atk, dsh, abl, itr, sw = int(action[0]), int(action[1]), int(action[2]), int(action[3]), int(action[4]), int(action[5])
+        mx, my = DIRECTIONS[dir_idx]
+        return mx, my, bool(atk), bool(dsh), bool(abl), bool(itr), bool(sw)
+
+    def _state_to_obs(self, s: dict) -> np.ndarray:
+        p = s.get("player", {})
+        b = s.get("buffs",  {})
+
+        px = float(p.get("x", 0)) / WORLD_SCALE
+        py = float(p.get("y", 0)) / WORLD_SCALE
+        hp_ratio  = float(p.get("hp", 0)) / max(float(p.get("max_hp", 6)), 1.0)
+        atk_norm  = float(p.get("attack", 10)) / 30.0
+        timer_norm = float(s.get("timer", 0)) / MAX_TIMER
+
+        facing_x = float(p.get("facing_x", 1.0))
+        facing_y = float(p.get("facing_y", 0.0))
+        obs = [px, py, hp_ratio, atk_norm, timer_norm, facing_x, facing_y]
+
+        obs += [
+            float(b.get("damage_multiplier",  1.0)) / 3.0,
+            float(b.get("speed_multiplier",   1.0)) / 3.0,
+            float(b.get("ability_multiplier", 1.0)) / 3.0,
+            float(b.get("kill_stack_count",   0))   / 30.0,
+            float(b.get("kill_stack_active",  False)),
+            float(b.get("bloodlust",          False)),
+            float(b.get("cheat_death_active", False)),
+            float(b.get("dash_stacks_current", 0))  / 4.0,
+        ]
+
+        # inamici sortati dupa distanta fata de player (cei mai apropiati primii)
+        raw_enemies = s.get("enemies", [])
+        raw_px = float(p.get("x", 0))
+        raw_py = float(p.get("y", 0))
+        raw_enemies = sorted(
+            raw_enemies,
+            key=lambda e: (e["x"] - raw_px) ** 2 + (e["y"] - raw_py) ** 2
+        )
+        raw_enemies = raw_enemies[:MAX_ENEMIES]
+
+        for e in raw_enemies:
+            rel_x = (float(e["x"]) - raw_px) / WORLD_SCALE
+            rel_y = (float(e["y"]) - raw_py) / WORLD_SCALE
+            hp_e  = float(e.get("hp", 0)) / 100.0
+            dist  = max((rel_x ** 2 + rel_y ** 2) ** 0.5, 0.001)
+            facing_dot = (facing_x * rel_x + facing_y * rel_y) / dist
+            obs  += [rel_x, rel_y, hp_e, facing_dot]
+
+        # padding pentru sloturile goale
+        for _ in range(MAX_ENEMIES - len(raw_enemies)):
+            obs += [0.0, 0.0, 0.0, 0.0]
+
+        obs += [
+            float(s.get("enemy_count", 0)) / 20.0,
+            float(s.get("total_kills", 0)) / 100.0,
+            float(s.get("run_active",  False)),
+        ]
+
+        # buff chests disponibile (ce buff e in fiecare cufar)
+        obs += [float(s.get("chests_active", False))]
+        raw_chests = s.get("available_chests", [])[:MAX_CHESTS]
+        for c in raw_chests:
+            bid = c.get("buff_id", "")
+            bid_norm = (BUFF_ID_LIST.index(bid) + 1) / len(BUFF_ID_LIST) if bid in BUFF_ID_LIST else 0.0
+            rel_x = (float(c.get("x", 0)) - raw_px) / WORLD_SCALE
+            rel_y = (float(c.get("y", 0)) - raw_py) / WORLD_SCALE
+            obs += [bid_norm, rel_x, rel_y]
+        for _ in range(MAX_CHESTS - len(raw_chests)):
+            obs += [0.0, 0.0, 0.0]
+
+        # boss coverage attack
+        cov_active = float(s.get("coverage_attack_active", False))
+        cov_safe   = float(s.get("coverage_safe", False))
+        safe_pos   = s.get("coverage_safe_pos", {"x": 0.0, "y": 0.0})
+        cov_rel_x  = (float(safe_pos.get("x", 0.0)) - raw_px) / WORLD_SCALE
+        cov_rel_y  = (float(safe_pos.get("y", 0.0)) - raw_py) / WORLD_SCALE
+        obs += [cov_active, cov_safe, cov_rel_x, cov_rel_y]
+
+        # orburi boss (proiectile)
+        raw_orbs = s.get("boss_orbs", [])[:MAX_ORBS]
+        raw_orbs = sorted(raw_orbs,
+                          key=lambda o: (o["x"] - raw_px) ** 2 + (o["y"] - raw_py) ** 2)
+        for o in raw_orbs:
+            obs += [(float(o["x"]) - raw_px) / WORLD_SCALE,
+                    (float(o["y"]) - raw_py) / WORLD_SCALE,
+                    float(o.get("vx", 0.0)) / VEL_SCALE,
+                    float(o.get("vy", 0.0)) / VEL_SCALE]
+        for _ in range(MAX_ORBS - len(raw_orbs)):
+            obs += [0.0, 0.0, 0.0, 0.0]
+
+        # scena curenta (room index normalizat)
+        scene_path = s.get("scene_path", "")
+        scene_idx  = SCENE_LIST.index(scene_path) + 1 if scene_path in SCENE_LIST else 0
+        obs += [scene_idx / len(SCENE_LIST)]
+
+        # boss hp normalizat (-1 = boss nu e in scena)
+        boss_hp_raw = float(s.get("boss_hp", -1))
+        obs += [boss_hp_raw / BOSS_MAX_HP if boss_hp_raw >= 0 else -1.0]
+
+        # gems normalizat
+        obs += [float(s.get("gems", 0)) / MAX_GEMS]
+
+        # cel mai apropiat exit (relativ la player)
+        ne = s.get("nearest_exit", {})
+        if ne.get("found", False):
+            obs += [(float(ne["x"]) - raw_px) / WORLD_SCALE,
+                    (float(ne["y"]) - raw_py) / WORLD_SCALE]
+        else:
+            obs += [0.0, 0.0]
+
+        # abilitate activa (normalizat 0-1, max 3)
+        obs += [float(s.get("ability_index", 0)) / 3.0]
+
+        # quest pornit
+        obs += [float(s.get("quest_started", False))]
+
+        # progres levere (current/total normalizat)
+        levers_total = max(float(s.get("levers_total", 4)), 1.0)
+        obs += [float(s.get("levers_current", 0)) / levers_total,
+                float(s.get("levers_total", 0)) / 4.0]
+
+        # dialog / shop deschis
+        obs += [float(s.get("in_dialog", False)),
+                float(s.get("in_shop",   False))]
+
+        obs += [float(s.get("charge_progress", 0.0))]
+
+        # statui dungeon (pozitie relativa + on_target)
+        raw_statues = s.get("statues", [])[:MAX_STATUES]
+        raw_statues = sorted(raw_statues,
+                             key=lambda st: (st["x"] - raw_px)**2 + (st["y"] - raw_py)**2)
+        for st in raw_statues:
+            obs += [(float(st["x"]) - raw_px) / WORLD_SCALE,
+                    (float(st["y"]) - raw_py) / WORLD_SCALE,
+                    float(st.get("on_target", False))]
+        for _ in range(MAX_STATUES - len(raw_statues)):
+            obs += [0.0, 0.0, 0.0]
+
+        # placi de presiune (pozitie relativa + active)
+        raw_plates = s.get("plates", [])[:MAX_PLATES]
+        raw_plates = sorted(raw_plates,
+                            key=lambda pl: (pl["x"] - raw_px)**2 + (pl["y"] - raw_py)**2)
+        for pl in raw_plates:
+            obs += [(float(pl["x"]) - raw_px) / WORLD_SCALE,
+                    (float(pl["y"]) - raw_py) / WORLD_SCALE,
+                    float(pl.get("active", False))]
+        for _ in range(MAX_PLATES - len(raw_plates)):
+            obs += [0.0, 0.0, 0.0]
+
+        # pozitia NPC (relativa, 0 daca quest deja luat)
+        npc = s.get("npc_pos", {})
+        if npc.get("found", False):
+            obs += [(float(npc["x"]) - raw_px) / WORLD_SCALE,
+                    (float(npc["y"]) - raw_py) / WORLD_SCALE,
+                    1.0]
+        else:
+            obs += [0.0, 0.0, 0.0]
+
+        # nearest trap (spike/saw/arrow) — rel pozitie + activ
+        trap = s.get("nearest_trap", {})
+        if trap.get("found", False):
+            obs += [(float(trap["x"]) - raw_px) / WORLD_SCALE,
+                    (float(trap["y"]) - raw_py) / WORLD_SCALE,
+                    float(trap.get("is_active", False))]
+        else:
+            obs += [0.0, 0.0, 0.0]
+
+        # wave info (Area02/01, Dungeon01/03) — wave normalizat + progres kill
+        kt = max(float(s.get("kill_target", 0)), 1.0)
+        obs += [float(s.get("current_wave", 0)) / 4.0,
+                min(float(s.get("kills_in_room", 0)) / kt, 1.0)]
+
+        # Top 3 traps (suplimentar la nearest_trap)
+        raw_top_traps = s.get("top_traps", [])[:MAX_TRAPS]
+        for t in raw_top_traps:
+            obs += [(float(t["x"]) - raw_px) / WORLD_SCALE,
+                    (float(t["y"]) - raw_py) / WORLD_SCALE,
+                    float(t.get("is_active", False))]
+        for _ in range(MAX_TRAPS - len(raw_top_traps)):
+            obs += [0.0, 0.0, 0.0]
+
+        # Lich projectiles (top 3 — fire spells letale in Area02/01, Dungeon01/03)
+        raw_lich = s.get("lich_projectiles", [])[:MAX_LICH_PROJ]
+        for proj in raw_lich:
+            obs += [(float(proj["x"]) - raw_px) / WORLD_SCALE,
+                    (float(proj["y"]) - raw_py) / WORLD_SCALE,
+                    float(proj.get("vx", 0.0)) / VEL_SCALE,
+                    float(proj.get("vy", 0.0)) / VEL_SCALE]
+        for _ in range(MAX_LICH_PROJ - len(raw_lich)):
+            obs += [0.0, 0.0, 0.0, 0.0]
+
+        # Trap arrows (top 3 — sageti zburatoare in Area01/03)
+        raw_arrows = s.get("trap_arrows", [])[:MAX_TRAP_ARROWS]
+        for a in raw_arrows:
+            obs += [(float(a["x"]) - raw_px) / WORLD_SCALE,
+                    (float(a["y"]) - raw_py) / WORLD_SCALE,
+                    float(a.get("vx", 0.0)) / VEL_SCALE,
+                    float(a.get("vy", 0.0)) / VEL_SCALE]
+        for _ in range(MAX_TRAP_ARROWS - len(raw_arrows)):
+            obs += [0.0, 0.0, 0.0, 0.0]
+
+        # Item chests (goblin room) — ability_id deterministic per chest
+        raw_items = s.get("item_chests", [])[:MAX_ITEM_CHESTS]
+        for c in raw_items:
+            aid = int(c.get("ability_id", -1))
+            aid_norm = (aid + 1) / 3.0  # -1→0, 0→0.33 (arrow), 1→0.67 (boom), 2→1.0 (grapple)
+            obs += [aid_norm,
+                    (float(c.get("x", 0)) - raw_px) / WORLD_SCALE,
+                    (float(c.get("y", 0)) - raw_py) / WORLD_SCALE]
+        for _ in range(MAX_ITEM_CHESTS - len(raw_items)):
+            obs += [0.0, 0.0, 0.0]
+
+        # Resurse player — arrows si bombs (combat resource management)
+        obs += [float(p.get("arrows", 0)) / 30.0,   # 30 = max (era 10, boost)
+                float(p.get("bombs", 0)) / 10.0]
+
+        # Levere Area02/02 — top 4 levere sortate dupa distanta
+        raw_levers = sorted(
+            s.get("levers", []),
+            key=lambda lv: (lv["x"] - raw_px) ** 2 + (lv["y"] - raw_py) ** 2
+        )[:MAX_LEVERS]
+        for lv in raw_levers:
+            obs += [(float(lv["x"]) - raw_px) / WORLD_SCALE,
+                    (float(lv["y"]) - raw_py) / WORLD_SCALE,
+                    float(lv.get("is_activated", False))]
+        for _ in range(MAX_LEVERS - len(raw_levers)):
+            obs += [0.0, 0.0, 0.0]
+
+        # Locked door (Dungeon01/02) — pozitie + has_key flag
+        ld = s.get("locked_door", {})
+        if ld.get("found", False):
+            obs += [(float(ld["x"]) - raw_px) / WORLD_SCALE,
+                    (float(ld["y"]) - raw_py) / WORLD_SCALE,
+                    1.0,
+                    float(ld.get("has_key", False))]
+        else:
+            obs += [0.0, 0.0, 0.0, 0.0]
+
+        # Item dropper (key drop Dungeon01/03)
+        idrp = s.get("item_drop", {})
+        if idrp.get("found", False):
+            obs += [(float(idrp["x"]) - raw_px) / WORLD_SCALE,
+                    (float(idrp["y"]) - raw_py) / WORLD_SCALE,
+                    1.0]
+        else:
+            obs += [0.0, 0.0, 0.0]
+
+        # Pickups pe jos (gems verzi pentru shop, arrows, bombs) — top 3 nearest
+        raw_pickups = s.get("pickups", [])[:MAX_PICKUPS]
+        for pk in raw_pickups:
+            obs += [(float(pk["x"]) - raw_px) / WORLD_SCALE,
+                    (float(pk["y"]) - raw_py) / WORLD_SCALE,
+                    float(pk.get("type", 0)) / 2.0]   # 0=gem, 1=arrow, 2=bomb
+        for _ in range(MAX_PICKUPS - len(raw_pickups)):
+            obs += [0.0, 0.0, 0.0]
+
+        # Boss position + phase (doar in Dungeon01/04)
+        bp = s.get("boss_pos", {})
+        if bp.get("found", False):
+            obs += [(float(bp["x"]) - raw_px) / WORLD_SCALE,
+                    (float(bp["y"]) - raw_py) / WORLD_SCALE,
+                    1.0]
+        else:
+            obs += [0.0, 0.0, 0.0]
+        obs += [float(s.get("boss_phase", 0)) / 3.0]   # 0-3 → 0.0-1.0
+
+        return np.clip(np.array(obs, dtype=np.float32), -2.0, 2.0)
+
+    # ── gym interface ──────────────────────────────────────────────────────────
+
+    def reset(self, seed=None, options=None):
+        super().reset(seed=seed)
+
+        self._step_count = 0
+        self._visited.clear()
+        self._room_step_count    = 0
+        self._current_scene      = ""
+        reason                   = self._truncation_reason
+        self._truncation_reason  = ""
+        # salveaza pozitiile episodului anterior (sync counter cu HUD-ul Godot)
+        if self._episode_positions:
+            godot_ep = self._read_godot_episode()
+            self._episode_num = godot_ep   # sync local cu HUD-ul
+            try:
+                with open(POSITIONS_FILE, "a") as f:
+                    for pos in self._episode_positions:
+                        pos["episode"] = godot_ep
+                        f.write(json.dumps(pos) + "\n")
+            except Exception:
+                pass
+            self._episode_positions = []
+        # trimite reset cu motivul truncarii
+        self._write_action(reset=True, reset_reason=reason)
+        time.sleep(0.4)
+        self._write_action()   # clear reset flag
+        time.sleep(1.5)        # asteapta incarcarea scenei (redus 2.5→1.5, era prea conservator)
+
+        state = self._read_state()
+        if state is None:
+            state = {}
+        self._last_state = state
+
+        return self._state_to_obs(state), {}
+
+    def step(self, action: np.ndarray):
+        t0 = time.perf_counter()  # Run5l_v8b timing
+        mx, my, atk, dsh, abl, itr, sw = self._decode_action(action)
+        self._write_action(mx, my, atk, dsh, abl, interact=itr, switch_ability=sw)
+        t_write = time.perf_counter()
+
+        time.sleep(STEP_WAIT)  # 0.25s = un ciclu de export state
+        t_sleep = time.perf_counter()
+
+        state = self._read_state()
+        if state is None:
+            state = self._last_state
+        self._last_state = state
+        t_read = time.perf_counter()
+
+        self._step_count += 1
+
+        # Run5l_v8b: log timing la fiecare TIMING_SAMPLE step-uri (non-blocking, try/except)
+        if TIMING_ENABLED and self._step_count % TIMING_SAMPLE == 0:
+            try:
+                gap_since_last = t0 - getattr(self, "_t_prev_step_end", t0)
+                with open(TIMING_LOG, "a") as _tf:
+                    _tf.write(json.dumps({
+                        "step": self._step_count,
+                        "t_write_ms":   round((t_write - t0) * 1000, 2),
+                        "t_sleep_ms":   round((t_sleep - t_write) * 1000, 2),
+                        "t_read_ms":    round((t_read - t_sleep) * 1000, 2),
+                        "gap_prev_ms":  round(gap_since_last * 1000, 2),
+                        "state_valid":  state is not None,
+                    }) + "\n")
+            except Exception:
+                pass  # nu strica training daca log esueaza
+        self._t_prev_step_end = time.perf_counter()
+        obs        = self._state_to_obs(state)
+        reward     = float(state.get("reward", 0.0))
+        terminated = bool(state.get("done", False))
+        truncated  = False
+        if float(state.get("timer", 0.0)) >= MAX_TIMER:
+            truncated = True
+            self._truncation_reason = "truncated_global"
+
+        # ── logica per-camera ──────────────────────────────────────────────────
+        scene_now = state.get("scene_path", "")
+        if scene_now != self._current_scene:
+            # Bonus pentru iesirea din camera in buget
+            if self._current_scene in ROOM_STEP_LIMITS:
+                remaining = ROOM_STEP_LIMITS[self._current_scene] - self._room_step_count
+                if remaining > 0:
+                    reward += remaining * ROOM_EXIT_BONUS_PER_STEP
+            self._current_scene   = scene_now
+            self._room_step_count = 0
+        else:
+            self._room_step_count += 1
+            room_limit = ROOM_STEP_LIMITS.get(scene_now, 0)
+            # Run5e: A1/02 — soft penalty gradual dupa step 300 in loc de hard truncate la 400.
+            # Pastreaza gradient pentru ep care depasesc bugetul (99% din truncari erau aici).
+            if scene_now == "res://Levels/Area01/02.tscn":
+                if self._room_step_count > 300:
+                    reward += -0.1
+            elif room_limit > 0 and self._room_step_count >= room_limit:
+                reward    += ROOM_STEP_PENALTY
+                truncated  = True
+                self._truncation_reason = "truncated_room"
+
+        # inregistreaza pozitia (sample la fiecare 4 steps)
+        if self._step_count % 4 == 0:
+            p2 = state.get("player", {})
+            self._episode_positions.append({
+                "x": float(p2.get("x", 0)),
+                "y": float(p2.get("y", 0)),
+                "scene": state.get("scene_path", ""),
+            })
+
+        # curiosity: bonus mic la prima vizita a unei zone noi
+        p = state.get("player", {})
+        scene_path = state.get("scene_path", "")
+        scene_idx  = SCENE_LIST.index(scene_path) if scene_path in SCENE_LIST else -1
+        cell = (int(float(p.get("x", 0)) // 48), int(float(p.get("y", 0)) // 48), scene_idx)
+        if cell not in self._visited:
+            self._visited.add(cell)
+            reward += 0.05
+
+        return obs, reward, terminated, truncated, {}
+
+    def close(self):
+        self._write_action()
